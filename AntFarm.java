@@ -81,8 +81,8 @@ public class AntFarm {
                 antLocX = antLocX - 1;
                 screen[antLocX][antLocY] = Tile.A;
                 break;
+			
             case 2:
-
 		if (antOutOfBounds(antLocX, antLocY + 1, screen)) {
 			
 			moveRandom(screen);
@@ -94,8 +94,8 @@ public class AntFarm {
                 antLocY = antLocY + 1;
                 screen[antLocX][antLocY] = Tile.A;
                 break;
+			
             case 3:
-
 		if (antOutOfBounds(antLocX + 1, antLocY, screen)) {
 			
 			moveRandom(screen);
@@ -107,8 +107,8 @@ public class AntFarm {
                 antLocX = antLocX + 1;
                 screen[antLocX][antLocY] = Tile.A;
                 break;
+			
             case 4:
-
 		if (antOutOfBounds(antLocX, antLocY - 1, screen)) {
 			
 			moveRandom(screen);
