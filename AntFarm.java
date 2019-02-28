@@ -1,5 +1,4 @@
 package main;
-
 import java.io.BufferedWriter;
 import java.io.*;
 import java.util.Random;
@@ -12,30 +11,39 @@ public class AntFarm {
     private static int antLocX;
     private static int antLocY;
     private static int playspeed;
-    int i;
-    Tile[][] screen = new Tile[100][100];
-    for (int j = 0; j < 100; j++) {
-        for (i = 0; i < 10; i++) {
-            screen[i][j] = Tile.S;
+
+    private static Tile[][] initialize() {
+        int i;
+        Tile[][] screen = new Tile[100][100];
+        for (int j = 0; j < 100; j++) {
+            for (i = 0; i < 10; i++) {
+                screen[i][j] = Tile.S;
+            }
+            for (int k = i; k < 100; k++) {
+                screen[k][j] = Tile.D;
+            }
         }
-        for (int k = i; k < 100; k++) {
-            screen[k][j] = Tile.D;
-        }
+
+        antLocX = 50;
+        antLocY = 50;
+
+        screen[antLocX][antLocY] = Tile.A;
+
+
+        return screen;
     }
+    private void start(Tile [][]screen){
+        playspeed = 4000;
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                moveRandom(screen);
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, new Date(), playspeed);
 
-    antLocX = 50;
-    antLocY = 50;
-    playspeed = 4000;
-    screen[antLocX][antLocY] = Tile.A;
-	TimerTask task = new TimerTask() {
-        @Override
-        public void run() {
-            moveRandom(screen);
-        }
-    };
-    Timer timer = new Timer();
-    timer.schedule(task, new Date(), playspeed);
-
+    }
     private static void moveRandom(Tile[][] screen) {
         Random rn = new Random();
         int direction = rn.nextInt(4) + 1;
@@ -45,54 +53,49 @@ public class AntFarm {
 
         switch (direction) {
             case 1:
-
-		if (antOutOfBounds(antLocX - 1, antLocY, screen)) {
-			
-			moveRandom(screen);
-
-			break;
-
-		}
-
+                if (antOutOfBounds(antLocX - 1, antLocY, screen)) {
+                    moveRandom(screen);
+                    break;
+                }
                 screen[antLocX][antLocY] = Tile.T;
                 antLocX = antLocX - 1;
                 screen[antLocX][antLocY] = Tile.A;
                 break;
-			
+
             case 2:
-		if (antOutOfBounds(antLocX, antLocY + 1, screen)) {
-			
-			moveRandom(screen);
+                if (antOutOfBounds(antLocX, antLocY + 1, screen)) {
 
-			break;
+                    moveRandom(screen);
 
-		}
+                    break;
+
+                }
                 screen[antLocX][antLocY] = Tile.T;
                 antLocY = antLocY + 1;
                 screen[antLocX][antLocY] = Tile.A;
                 break;
-			
+
             case 3:
-		if (antOutOfBounds(antLocX + 1, antLocY, screen)) {
-			
-			moveRandom(screen);
+                if (antOutOfBounds(antLocX + 1, antLocY, screen)) {
 
-			break;
+                    moveRandom(screen);
 
-		}
+                    break;
+
+                }
                 screen[antLocX][antLocY] = Tile.T;
                 antLocX = antLocX + 1;
                 screen[antLocX][antLocY] = Tile.A;
                 break;
-			
+
             case 4:
-		if (antOutOfBounds(antLocX, antLocY - 1, screen)) {
-			
-			moveRandom(screen);
+                if (antOutOfBounds(antLocX, antLocY - 1, screen)) {
 
-			break;
+                    moveRandom(screen);
 
-		}
+                    break;
+
+                }
 
                 screen[antLocX][antLocY] = Tile.T;
                 antLocY = antLocY - 1;
@@ -136,10 +139,10 @@ public class AntFarm {
         {
             return true;
         }
-	if (screen[antLocX][antLocY] == Tile.S)
-	{
-	    return true;
-	}
+        if (screen[antLocX][antLocY] == Tile.S)
+        {
+            return true;
+        }
         return false;
     }
 
