@@ -63,8 +63,8 @@ public class AntFarm {
         Random rn = new Random();
         int direction = rn.nextInt(4) + 1;
 
-        while (isSafeDirection(direction, antLocX, antLocY) == false)
-            direction = rn.nextInt(4) + 1;
+//         while (isSafeDirection(direction, antLocX, antLocY) == false)
+//             direction = rn.nextInt(4) + 1;
 
         switch (direction) {
             case 1:
@@ -124,50 +124,50 @@ public class AntFarm {
         }
     }
 
-    private static boolean isSafeDirection(int direction, int antLocX, int antLocY)
-    {
-        int locX = antLocX;
-        int locY = antLocY;
-        switch (direction) {
-            case 1:
-                locX = locX - 1;
-                if (isOutOfBounds(locX, locY))
-                    return false;
-                else
-                    return true;
-            case 2:
-                locY = locY + 1;
-                if (isOutOfBounds(locX, locY))
-                    return false;
-                else
-                    return true;
-            case 3:
-                locX = locX + 1;
-                if (isOutOfBounds(locX, locY))
-                    return false;
-                else
-                    return true;
-            case 4:
-                locY = locY - 1;
-                if (isOutOfBounds(locX, locY))
-                    return false;
-                else
-                    return true;
-            default:
-                return false;
-        }
-    }
+//    private static boolean isSafeDirection(int direction, int antLocX, int antLocY)
+//     {
+//         int locX = antLocX;
+//         int locY = antLocY;
+//         switch (direction) {
+//             case 1:
+//                 locX = locX - 1;
+//                 if (isOutOfBounds(locX, locY))
+//                     return false;
+//                 else
+//                     return true;
+//             case 2:
+//                 locY = locY + 1;
+//                 if (isOutOfBounds(locX, locY))
+//                     return false;
+//                 else
+//                     return true;
+//             case 3:
+//                 locX = locX + 1;
+//                 if (isOutOfBounds(locX, locY))
+//                     return false;
+//                 else
+//                     return true;
+//             case 4:
+//                 locY = locY - 1;
+//                 if (isOutOfBounds(locX, locY))
+//                     return false;
+//                 else
+//                     return true;
+//             default:
+//                 return false;
+//         }
+//     }
 
-    public static boolean isOutOfBounds(int antLocX, int antLocY) {
+//     public static boolean isOutOfBounds(int antLocX, int antLocY) {
 
-        if (antLocX < 0 || antLocX > 100)
-            return true;
+//         if (antLocX < 0 || antLocX > 100)
+//             return true;
 
-        if (antLocY < 0 || antLocY > 100)
-            return true;
+//         if (antLocY < 0 || antLocY > 100)
+//             return true;
 
-        return false;
-    }
+//         return false;
+//     }
 
     private static void printScreen(Tile[][] screen) {
         for (int i = 0; i < 100; i++) {
