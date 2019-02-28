@@ -1,6 +1,9 @@
 package main;
 
 import java.util.Random;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -36,8 +39,16 @@ public class AntFarm {
 
         this.antLocX = 50;
         this.antLocY = 50;
-        this.playspeed = 10;
+        this.playspeed = 4000;
         screen[antLocX][antLocY] = Tile.A;
+	TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                moveRandom(screen);
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, new Date(), playspeed);
     }
 
     //    public AntFarm(int antLocX, int antLocY)
