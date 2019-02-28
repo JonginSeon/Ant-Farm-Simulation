@@ -11,15 +11,9 @@ import java.util.Scanner;
 public class AntFarm {
     private static int antLocX;
     private static int antLocY;
+    private static int playspeed;
 
     public static void main(String[] args) {
-        Tile[][] screen = initialize();
-        printScreen(screen);
-        moveRandom(screen);
-        printScreen(screen);
-    }
-
-    private static Tile[][] initialize() {
         int i;
         Tile[][] screen = new Tile[100][100];
         for (int j = 0; j < 100; j++) {
@@ -31,11 +25,11 @@ public class AntFarm {
             }
         }
 
-        this.antLocX = 50;
-        this.antLocY = 50;
-        this.playspeed = 4000;
+        antLocX = 50;
+        antLocY = 50;
+        playspeed = 4000;
         screen[antLocX][antLocY] = Tile.A;
-	TimerTask task = new TimerTask() {
+	    TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 moveRandom(screen);
@@ -43,20 +37,6 @@ public class AntFarm {
         };
         Timer timer = new Timer();
         timer.schedule(task, new Date(), playspeed);
-    }
-
-    public int getAntLocX() {
-        return antLocX;
-    }
-
-    public void setAntLocX(int antLocX) {
-        this.antLocX = antLocX;
-    }
-
-
-    public int getAntLocY() {
-        return antLocY;
-
     }
 
     private static void moveRandom(Tile[][] screen) {
@@ -124,51 +104,6 @@ public class AntFarm {
         }
     }
 
-//    private static boolean isSafeDirection(int direction, int antLocX, int antLocY)
-//     {
-//         int locX = antLocX;
-//         int locY = antLocY;
-//         switch (direction) {
-//             case 1:
-//                 locX = locX - 1;
-//                 if (isOutOfBounds(locX, locY))
-//                     return false;
-//                 else
-//                     return true;
-//             case 2:
-//                 locY = locY + 1;
-//                 if (isOutOfBounds(locX, locY))
-//                     return false;
-//                 else
-//                     return true;
-//             case 3:
-//                 locX = locX + 1;
-//                 if (isOutOfBounds(locX, locY))
-//                     return false;
-//                 else
-//                     return true;
-//             case 4:
-//                 locY = locY - 1;
-//                 if (isOutOfBounds(locX, locY))
-//                     return false;
-//                 else
-//                     return true;
-//             default:
-//                 return false;
-//         }
-//     }
-
-//     public static boolean isOutOfBounds(int antLocX, int antLocY) {
-
-//         if (antLocX < 0 || antLocX > 100)
-//             return true;
-
-//         if (antLocY < 0 || antLocY > 100)
-//             return true;
-
-//         return false;
-//     }
-
     private static void printScreen(Tile[][] screen) {
         for (int i = 0; i < 100; i++) {
             for (int j = 0; j < 100; j++) {
@@ -194,7 +129,7 @@ public class AntFarm {
 
     }
 
-    public boolean antOutOfBounds(int antLocX, int antLocY, Tile[][] screen)
+    public static boolean antOutOfBounds(int antLocX, int antLocY, Tile[][] screen)
     {
         if(antLocX < 0 || antLocX > screen.length)
         {
@@ -204,7 +139,7 @@ public class AntFarm {
         {
             return true;
         }
-	if(screen[antLocX][antLocY] == Tile.S)
+	if (screen[antLocX][antLocY] == Tile.S)
 	{
 	    return true;
 	}
