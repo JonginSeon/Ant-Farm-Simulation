@@ -12,32 +12,29 @@ public class AntFarm {
     private static int antLocX;
     private static int antLocY;
     private static int playspeed;
-
-    public static void main(String[] args) {
-        int i;
-        Tile[][] screen = new Tile[100][100];
-        for (int j = 0; j < 100; j++) {
-            for (i = 0; i < 10; i++) {
-                screen[i][j] = Tile.S;
-            }
-            for (int k = i; k < 100; k++) {
-                screen[k][j] = Tile.D;
-            }
+    int i;
+    Tile[][] screen = new Tile[100][100];
+    for (int j = 0; j < 100; j++) {
+        for (i = 0; i < 10; i++) {
+            screen[i][j] = Tile.S;
         }
-
-        antLocX = 50;
-        antLocY = 50;
-        playspeed = 4000;
-        screen[antLocX][antLocY] = Tile.A;
-	    TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                moveRandom(screen);
-            }
-        };
-        Timer timer = new Timer();
-        timer.schedule(task, new Date(), playspeed);
+        for (int k = i; k < 100; k++) {
+            screen[k][j] = Tile.D;
+        }
     }
+
+    antLocX = 50;
+    antLocY = 50;
+    playspeed = 4000;
+    screen[antLocX][antLocY] = Tile.A;
+	TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            moveRandom(screen);
+        }
+    };
+    Timer timer = new Timer();
+    timer.schedule(task, new Date(), playspeed);
 
     private static void moveRandom(Tile[][] screen) {
         Random rn = new Random();
