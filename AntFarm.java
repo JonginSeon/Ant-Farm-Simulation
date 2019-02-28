@@ -135,6 +135,14 @@ public class AntFarm {
 
             case 1:
 
+		if (antOutOfBounds(antLocX - 1, antLocY, screen)) {
+			
+			moveRandom(screen);
+
+			break;
+
+		}
+
                 screen[antLocX][antLocY] = Tile.T;
 
                 antLocX = antLocX - 1;
@@ -144,6 +152,14 @@ public class AntFarm {
                 break;
 
             case 2:
+
+		if (antOutOfBounds(antLocX, antLocY + 1, screen)) {
+			
+			moveRandom(screen);
+
+			break;
+
+		}
 
                 screen[antLocX][antLocY] = Tile.T;
 
@@ -155,6 +171,14 @@ public class AntFarm {
 
             case 3:
 
+		if (antOutOfBounds(antLocX + 1, antLocY, screen)) {
+			
+			moveRandom(screen);
+
+			break;
+
+		}
+
                 screen[antLocX][antLocY] = Tile.T;
 
                 antLocX = antLocX + 1;
@@ -164,6 +188,14 @@ public class AntFarm {
                 break;
 
             case 4:
+
+		if (antOutOfBounds(antLocX, antLocY - 1, screen)) {
+			
+			moveRandom(screen);
+
+			break;
+
+		}
 
                 screen[antLocX][antLocY] = Tile.T;
 
@@ -222,7 +254,7 @@ public class AntFarm {
 
     }
 
-    public boolean antOutOfBounds(int antLocX, int antLocY)
+    public boolean antOutOfBounds(int antLocX, int antLocY, Tile[][] screen)
     {
         if(antLocX < 0 || antLocX > screen.length)
         {
@@ -232,6 +264,10 @@ public class AntFarm {
         {
             return true;
         }
+	if(screen[antLocX][antLocY] == Tile.S)
+	{
+	    return true;
+	}
         return false;
     }
 
