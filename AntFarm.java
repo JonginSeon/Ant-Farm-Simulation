@@ -3,6 +3,9 @@ package main;
 import java.io.BufferedWriter;
 import java.io.*;
 import java.util.Random;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Scanner;
 
 public class AntFarm {
@@ -27,10 +30,33 @@ public class AntFarm {
                 screen[k][j] = Tile.D;
             }
         }
-        screen[50][50] = Tile.A;
-        antLocX = 50;
-        antLocY = 50;
-        return screen;
+
+        this.antLocX = 50;
+        this.antLocY = 50;
+        this.playspeed = 4000;
+        screen[antLocX][antLocY] = Tile.A;
+	TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                moveRandom(screen);
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, new Date(), playspeed);
+    }
+
+    public int getAntLocX() {
+        return antLocX;
+    }
+
+    public void setAntLocX(int antLocX) {
+        this.antLocX = antLocX;
+    }
+
+
+    public int getAntLocY() {
+        return antLocY;
+
     }
 
     private static void moveRandom(Tile[][] screen) {
@@ -42,21 +68,55 @@ public class AntFarm {
 
         switch (direction) {
             case 1:
+
+		if (antOutOfBounds(antLocX - 1, antLocY, screen)) {
+			
+			moveRandom(screen);
+
+			break;
+
+		}
+
                 screen[antLocX][antLocY] = Tile.T;
                 antLocX = antLocX - 1;
                 screen[antLocX][antLocY] = Tile.A;
                 break;
             case 2:
+
+		if (antOutOfBounds(antLocX, antLocY + 1, screen)) {
+			
+			moveRandom(screen);
+
+			break;
+
+		}
                 screen[antLocX][antLocY] = Tile.T;
                 antLocY = antLocY + 1;
                 screen[antLocX][antLocY] = Tile.A;
                 break;
             case 3:
+
+		if (antOutOfBounds(antLocX + 1, antLocY, screen)) {
+			
+			moveRandom(screen);
+
+			break;
+
+		}
                 screen[antLocX][antLocY] = Tile.T;
                 antLocX = antLocX + 1;
                 screen[antLocX][antLocY] = Tile.A;
                 break;
             case 4:
+
+		if (antOutOfBounds(antLocX, antLocY - 1, screen)) {
+			
+			moveRandom(screen);
+
+			break;
+
+		}
+
                 screen[antLocX][antLocY] = Tile.T;
                 antLocY = antLocY - 1;
                 screen[antLocX][antLocY] = Tile.A;
@@ -129,6 +189,26 @@ public class AntFarm {
                 if (j == 99) System.out.println();
             }
         }
+
+        System.out.println();
+
+    }
+
+    public boolean antOutOfBounds(int antLocX, int antLocY, Tile[][] screen)
+    {
+        if(antLocX < 0 || antLocX > screen.length)
+        {
+            return true;
+        }
+        if(antLocY < 0 || antLocY > screen.length)
+        {
+            return true;
+        }
+	if(screen[antLocX][antLocY] == Tile.S)
+	{
+	    return true;
+	}
+        return false;
     }
 
     public void save(Tile[][] screen) {
