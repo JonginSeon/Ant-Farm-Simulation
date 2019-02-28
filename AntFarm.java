@@ -1,39 +1,33 @@
 package main;
 
+import java.io.BufferedWriter;
+import java.io.*;
 import java.util.Random;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Scanner;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-
 
 public class AntFarm {
+    private static int antLocX;
+    private static int antLocY;
 
-    private int antLocX;
+    public static void main(String[] args) {
+        Tile[][] screen = initialize();
+        printScreen(screen);
+        moveRandom(screen);
+        printScreen(screen);
+    }
 
-    private int antLocY;
-
-    private Tile[][] screen;
-
-    private int playspeed;
-
-    public AntFarm() {
-        super();
-        screen = new Tile[100][100];
-        int rs;
-        for (int c = 0; c < 100; c++) {
-
-            for (rs = 0; rs < 10; rs++) {
-                screen[rs][c] = Tile.S;
+    private static Tile[][] initialize() {
+        int i;
+        Tile[][] screen = new Tile[100][100];
+        for (int j = 0; j < 100; j++) {
+            for (i = 0; i < 10; i++) {
+                screen[i][j] = Tile.S;
             }
-
-            for (int rd = rs; rd < 100; rd++) {
-                screen[rd][c] = Tile.D;
+            for (int k = i; k < 100; k++) {
+                screen[k][j] = Tile.D;
             }
         }
 
@@ -51,65 +45,6 @@ public class AntFarm {
         timer.schedule(task, new Date(), playspeed);
     }
 
-    //    public AntFarm(int antLocX, int antLocY)
-    //    {
-    //        super();
-    //        this.antLocX = antLocX;
-    //        this.antLocY = antLocY;
-    //    }
-
-    //    public AntFarm(int antLocX)
-    //    {
-    //        super();
-    //        this.antLocX = antLocX;
-    //    }
-    //
-    //    public AntFarm(int antLocY){
-    //        super();
-    //        this.antLocY = antLocY;
-    //    }
-
-    //public static void main(String[] args) {
-
-    //Tile[][] screen = initialize();
-
-    // printScreen(screen);
-
-    //moveRandom(screen);
-
-    // printScreen(screen);
-
-    // }
-
-
-    //    private static Tile[][] initialize() {
-    //        for (int j = 0; j < 100; j++) {
-    //
-    //                for (i = 0; i < 10; i++) {
-    //
-    //                    screen[i][j] = Tile.S;
-    //
-    //                }
-    //
-    //                for (int k = i; k < 100; k++) {
-    //
-    //                    screen[k][j] = Tile.D;
-    //
-    //                }
-    //
-    //        }
-    //
-    //        screen[50][50] = Tile.A;
-    //
-    //        antLocX = 50;
-    //
-    //        antLocY = 50;
-    //
-    //        return screen;
-    //
-    //    }
-
-
     public int getAntLocX() {
         return antLocX;
     }
@@ -121,29 +56,17 @@ public class AntFarm {
 
     public int getAntLocY() {
         return antLocY;
+
     }
 
-    public void setAntLocY(int antLocY) {
-        this.antLocY = antLocY;
-    }
-
-    public int getPlayspeed() {
-        return playspeed;
-    }
-
-    public void setPlayspeed(int playspeed) {
-        this.playspeed = playspeed;
-    }
-
-
-    private void moveRandom(Tile[][] screen) {
-
+    private static void moveRandom(Tile[][] screen) {
         Random rn = new Random();
-
         int direction = rn.nextInt(4) + 1;
 
-        switch (direction) {
+        while (isSafeDirection(direction, antLocX, antLocY) == false)
+            direction = rn.nextInt(4) + 1;
 
+        switch (direction) {
             case 1:
 
 		if (antOutOfBounds(antLocX - 1, antLocY, screen)) {
@@ -155,13 +78,9 @@ public class AntFarm {
 		}
 
                 screen[antLocX][antLocY] = Tile.T;
-
                 antLocX = antLocX - 1;
-
                 screen[antLocX][antLocY] = Tile.A;
-
                 break;
-
             case 2:
 
 		if (antOutOfBounds(antLocX, antLocY + 1, screen)) {
@@ -171,15 +90,10 @@ public class AntFarm {
 			break;
 
 		}
-
                 screen[antLocX][antLocY] = Tile.T;
-
                 antLocY = antLocY + 1;
-
                 screen[antLocX][antLocY] = Tile.A;
-
                 break;
-
             case 3:
 
 		if (antOutOfBounds(antLocX + 1, antLocY, screen)) {
@@ -189,15 +103,10 @@ public class AntFarm {
 			break;
 
 		}
-
                 screen[antLocX][antLocY] = Tile.T;
-
                 antLocX = antLocX + 1;
-
                 screen[antLocX][antLocY] = Tile.A;
-
                 break;
-
             case 4:
 
 		if (antOutOfBounds(antLocX, antLocY - 1, screen)) {
@@ -209,56 +118,76 @@ public class AntFarm {
 		}
 
                 screen[antLocX][antLocY] = Tile.T;
-
                 antLocY = antLocY - 1;
-
                 screen[antLocX][antLocY] = Tile.A;
-
                 break;
-
         }
-
     }
 
+    private static boolean isSafeDirection(int direction, int antLocX, int antLocY)
+    {
+        int locX = antLocX;
+        int locY = antLocY;
+        switch (direction) {
+            case 1:
+                locX = locX - 1;
+                if (isOutOfBounds(locX, locY))
+                    return false;
+                else
+                    return true;
+            case 2:
+                locY = locY + 1;
+                if (isOutOfBounds(locX, locY))
+                    return false;
+                else
+                    return true;
+            case 3:
+                locX = locX + 1;
+                if (isOutOfBounds(locX, locY))
+                    return false;
+                else
+                    return true;
+            case 4:
+                locY = locY - 1;
+                if (isOutOfBounds(locX, locY))
+                    return false;
+                else
+                    return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isOutOfBounds(int antLocX, int antLocY) {
+
+        if (antLocX < 0 || antLocX > 100)
+            return true;
+
+        if (antLocY < 0 || antLocY > 100)
+            return true;
+
+        return false;
+    }
 
     private static void printScreen(Tile[][] screen) {
-
         for (int i = 0; i < 100; i++) {
-
             for (int j = 0; j < 100; j++) {
-
                 switch (screen[i][j]) {
-
                     case A:
-
                         System.out.print('A');
-
                         break;
-
                     case D:
-
                         System.out.print('D');
-
                         break;
-
                     case S:
-
                         System.out.print('S');
-
                         break;
-
                     case T:
-
                         System.out.print('T');
-
                         break;
-
                 }
-
                 if (j == 99) System.out.println();
-
             }
-
         }
 
         System.out.println();
@@ -282,15 +211,17 @@ public class AntFarm {
         return false;
     }
 
-
     public void save(Tile[][] screen) {
         String fileName = "Saved Game";
+
         PrintWriter out = null;
         try {
             out = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         for (int r = 0; r < screen.length; r++) {
             for (int c = 0; c < screen.length; c++) {
                 out.println(screen[r][c].name());
@@ -299,22 +230,22 @@ public class AntFarm {
         out.close();
     }
 
-    public void load(String filename) {
+    //TODO Combine with constructor above
+    public void load(String filename, Tile[][] screen) {
         try {
+
             Scanner fileReader = new Scanner(new File(filename));
-            for (int r = 0; r < screen.length; r++) {
-                for (int c = 0; c < screen.length; c++) {
+            for (int r = 0; r < 100; r++) {
+                for (int c = 0; c < 100; c++) {
                     String t = fileReader.nextLine();
                     screen[r][c] = Tile.valueOf(t);
-
+                    //Loads to a local variable and does nothing
                 }
             }
+
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        ;
     }
-
-
 }
