@@ -5,6 +5,9 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 
 public class WorldMenuBar extends MenuBar {
 
@@ -44,7 +47,11 @@ public class WorldMenuBar extends MenuBar {
 
             if(event.getSource() == saveItem)
             {
-                //farm.save()
+                FileChooser chooser = new FileChooser();
+                File status = chooser.showSaveDialog(null);
+                if(status != null) {
+                    farm.save(farm.getScreen());
+                }
             }
 
             if(event.getSource() == loadItem)

@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class AntFarm {
-    private  Tile[][] screen;
+    private static Tile[][] screen;
     private  int antLocX;
     private  int antLocY;
     private  int playspeed;
