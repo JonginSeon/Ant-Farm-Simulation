@@ -6,12 +6,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.control.Button;
 import javafx.event.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class WorldPane extends AnchorPane {
 
     private Button[][] world;
+    private AntFarm farm;
 
     public WorldPane() {
+
+        farm = new AntFarm();
         ButtonHandler handler = new ButtonHandler();
 
         TilePane tilePane = new TilePane();
@@ -69,6 +74,23 @@ public class WorldPane extends AnchorPane {
 
             }
         }
+    }
+
+    public void runSimulation()
+    {
+        Timer time = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.print("Moving...");
+                farm.moveRandom();
+                System.out.print(" Updating...");
+                updateWorld(farm.getScreen());
+                System.out.print(" Done\n");
+            }
+        };
+
+        time.schedule(task, 3000, 1000);
     }
 
     private class ButtonHandler implements EventHandler<ActionEvent> {
