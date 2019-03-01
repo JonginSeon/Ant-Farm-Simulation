@@ -82,15 +82,15 @@ public class WorldPane extends AnchorPane {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.print("Moving...");
+             //   System.out.print("Moving...");
                 farm.moveRandom();
-                System.out.print(" Updating...");
+             //   System.out.print(" Updating...");
                 updateWorld(farm.getScreen());
-                System.out.print(" Done\n");
+             //   System.out.print(" Done\n");
             }
         };
 
-        time.schedule(task, 3000, 1000);
+        time.schedule(task, 3000, 100);
     }
 
     private class ButtonHandler implements EventHandler<ActionEvent> {

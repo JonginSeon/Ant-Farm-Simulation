@@ -3,9 +3,6 @@ package main;
 import java.io.BufferedWriter;
 import java.io.*;
 import java.util.Random;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.Scanner;
 
 public class AntFarm {
@@ -36,33 +33,6 @@ public class AntFarm {
     {
         return screen;
     }
-
-//    public static void main(String[] args) {
-//
-//            int i;
-//            Tile[][] screen = new Tile[100][100];
-//            for (int j = 0; j < 100; j++) {
-//                for (i = 0; i < 10; i++) {
-//                    screen[i][j] = Tile.S;
-//                }
-//                for (int k = i; k < 100; k++) {
-//                    screen[k][j] = Tile.D;
-//                }
-//            }
-//
-//        antLocX = 50;
-//        antLocY = 50;
-//        playspeed = 4000;
-//        screen[antLocX][antLocY] = Tile.A;
-//	    TimerTask task = new TimerTask() {
-//            @Override
-//            public void run() {
-//                moveRandom();
-//            }
-//        };
-//        Timer timer = new Timer();
-//        timer.schedule(task, new Date(), playspeed);
-//    }
 
     public void moveRandom() {
         Random rn = new Random();

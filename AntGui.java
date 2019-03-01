@@ -2,6 +2,7 @@ package main;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class AntGui extends Application {
@@ -9,10 +10,16 @@ public class AntGui extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 //        Parent root = FXMLLoader.load(getClass().getResource("layout.fxml"));
-        primaryStage.setTitle("Land of Future Ant Shenanigans!");
+        primaryStage.setTitle("Land of Unchecked Ant Shenanigans!");
 
+        BorderPane root = new BorderPane();
+        WorldMenuBar menuBar = new WorldMenuBar();
         WorldPane worldTiles = new WorldPane();
-        Scene worldMap = new Scene(worldTiles, 1000, 950);
+
+        root.setTop(menuBar);
+        root.setCenter(worldTiles);
+
+        Scene worldMap = new Scene(root, 1000, 950);
         primaryStage.setScene(worldMap);
         primaryStage.show();
 
