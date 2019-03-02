@@ -13,9 +13,16 @@ public class WorldMenuBar extends MenuBar {
 
     private MenuHandler handler;
     private Menu fileMenu;
+    private Menu speedMenu;
+    private Menu runMenu;
+
+    private MenuItem startItem;
+    private MenuItem pauseItem;
+    private MenuItem resetItem;
     private MenuItem saveItem;
     private MenuItem loadItem;
     private MenuItem quitItem;
+
 
     private AntFarm farm;
 
@@ -24,6 +31,17 @@ public class WorldMenuBar extends MenuBar {
         handler = new MenuHandler();
 
         fileMenu = new Menu("File");
+        runMenu = new Menu("Run");
+        speedMenu = new Menu("Speeds");
+
+        resetItem = new MenuItem("Reset");
+        resetItem.setOnAction(handler);
+
+        startItem = new MenuItem("Start Simulation");
+        startItem.setOnAction(handler);
+
+        pauseItem = new MenuItem("Pause");
+        pauseItem.setOnAction(handler);
 
         saveItem = new MenuItem("Save File");
         saveItem.setOnAction(handler);
@@ -34,7 +52,10 @@ public class WorldMenuBar extends MenuBar {
         quitItem = new MenuItem("Exit");
         quitItem.setOnAction(handler);
 
-        fileMenu.getItems().addAll(saveItem, loadItem, quitItem);
+        fileMenu.getItems().addAll(saveItem, loadItem);
+        runMenu.getItems().addAll(startItem, pauseItem, resetItem, quitItem);
+
+        
         getMenus().addAll(fileMenu);
     }
 
@@ -56,7 +77,13 @@ public class WorldMenuBar extends MenuBar {
 
             if(event.getSource() == loadItem)
             {
-
+                FileChooser chooser = new FileChooser();
+                File status = chooser.showOpenDialog(null);
+                if(status != null)
+                {
+                    String filename = status.getName();
+                    farm.load(filename, farm.getScreen());
+                }
             }
 
         }

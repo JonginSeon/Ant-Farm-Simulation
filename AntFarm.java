@@ -29,17 +29,17 @@ public class AntFarm {
         playspeed = 1000;
     }
 
-    public void setPlaySpeed(int playSpeed) {
-	this.playspeed = playSpeed;
-    }
-
-    public int getPlaySpeed() {
-        return this.playspeed;
-    }
-
     public Tile[][] getScreen()
     {
         return screen;
+    }
+
+    public int getPlayspeed() {
+        return playspeed;
+    }
+
+    public void setPlayspeed(int playspeed) {
+        this.playspeed = playspeed;
     }
 
     public void moveRandom() {
@@ -176,7 +176,6 @@ public class AntFarm {
                 for (int c = 0; c < 100; c++) {
                     String t = fileReader.nextLine();
                     screen[r][c] = Tile.valueOf(t);
-                    //Loads to a local variable and does nothing
                 }
             }
 
