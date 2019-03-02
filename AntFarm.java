@@ -26,7 +26,7 @@ public class AntFarm {
 
         antLocX = 10;
         antLocY = 50;
-        playspeed = 1000;
+        playspeed = 100;
     }
 
     public Tile[][] getScreen()

@@ -23,8 +23,14 @@ public class WorldMenuBar extends MenuBar {
     private MenuItem loadItem;
     private MenuItem quitItem;
 
+    private MenuItem oneSpeedItem;
+    private MenuItem twoSpeedItem;
+    private MenuItem threeSpeedItem;
+    private MenuItem fourSpeedItem;
+
 
     private AntFarm farm;
+    private WorldPane pane;
 
     public WorldMenuBar()
     {
@@ -52,11 +58,24 @@ public class WorldMenuBar extends MenuBar {
         quitItem = new MenuItem("Exit");
         quitItem.setOnAction(handler);
 
+        oneSpeedItem = new MenuItem("1X Speed");
+        oneSpeedItem.setOnAction(handler);
+
+        twoSpeedItem = new MenuItem("2X Speed");
+        twoSpeedItem.setOnAction(handler);
+
+        threeSpeedItem = new MenuItem("3X Speed");
+        threeSpeedItem.setOnAction(handler);
+
+        fourSpeedItem = new MenuItem("4X Speed");
+        fourSpeedItem.setOnAction(handler);
+
         fileMenu.getItems().addAll(saveItem, loadItem);
         runMenu.getItems().addAll(startItem, pauseItem, resetItem, quitItem);
+        speedMenu.getItems().addAll(oneSpeedItem, twoSpeedItem, threeSpeedItem, fourSpeedItem);
 
         
-        getMenus().addAll(fileMenu);
+        getMenus().addAll(fileMenu, runMenu, speedMenu);
     }
 
     private class MenuHandler implements EventHandler<ActionEvent>
@@ -75,6 +94,21 @@ public class WorldMenuBar extends MenuBar {
                 }
             }
 
+            if(event.getSource() == startItem)
+            {
+                
+            }
+
+            if(event.getSource() == resetItem )
+            {
+
+            }
+
+            if(event.getSource() == pauseItem)
+            {
+
+            }
+
             if(event.getSource() == loadItem)
             {
                 FileChooser chooser = new FileChooser();
@@ -84,6 +118,31 @@ public class WorldMenuBar extends MenuBar {
                     String filename = status.getName();
                     farm.load(filename, farm.getScreen());
                 }
+            }
+
+            if(event.getSource() == oneSpeedItem)
+            {
+//                farm.setPlayspeed(1000);
+//                pane.runSimulation();
+
+            }
+
+            if(event.getSource() == twoSpeedItem)
+            {
+//                farm.setPlayspeed(500);
+//                pane.runSimulation();
+            }
+
+            if(event.getSource() == threeSpeedItem)
+            {
+//                farm.setPlayspeed(250);
+//                pane.runSimulation();
+            }
+
+            if(event.getSource() == fourSpeedItem)
+            {
+                farm.setPlayspeed(100);
+                pane.runSimulation();
             }
 
         }

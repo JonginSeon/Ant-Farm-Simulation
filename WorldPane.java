@@ -90,7 +90,7 @@ public class WorldPane extends AnchorPane {
             }
         };
 
-        time.schedule(task, 3000, 100);
+        time.schedule(task, 3000, farm.getPlayspeed());
     }
 
     private class ButtonHandler implements EventHandler<ActionEvent> {
