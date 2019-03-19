@@ -9,7 +9,7 @@ public class AntGui extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-//        Parent root = FXMLLoader.load(getClass().getResource("layout.fxml"));
+
         primaryStage.setTitle("Land of Unchecked Ant Shenanigans!");
 
         BorderPane root = new BorderPane();

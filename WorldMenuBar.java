@@ -35,6 +35,8 @@ public class WorldMenuBar extends MenuBar {
     public WorldMenuBar()
     {
         handler = new MenuHandler();
+        farm = new AntFarm();
+        pane = new WorldPane();
 
         fileMenu = new Menu("File");
         runMenu = new Menu("Run");
@@ -122,21 +124,21 @@ public class WorldMenuBar extends MenuBar {
 
             if(event.getSource() == oneSpeedItem)
             {
-//                farm.setPlayspeed(1000);
-//                pane.runSimulation();
+               farm.setPlayspeed(1000);
+               pane.runSimulation();
 
             }
 
             if(event.getSource() == twoSpeedItem)
             {
-//                farm.setPlayspeed(500);
-//                pane.runSimulation();
+                farm.setPlayspeed(500);
+                pane.runSimulation();
             }
 
             if(event.getSource() == threeSpeedItem)
             {
-//                farm.setPlayspeed(250);
-//                pane.runSimulation();
+                farm.setPlayspeed(250);
+                pane.runSimulation();
             }
 
             if(event.getSource() == fourSpeedItem)
