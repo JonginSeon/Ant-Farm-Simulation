@@ -35,8 +35,8 @@ public class WorldMenuBar extends MenuBar {
     public WorldMenuBar(WorldPane worldPane)
     {
         handler = new MenuHandler();
-        farm = worldPane.getFarm();
         pane = worldPane;
+        farm = pane.getFarm();
 
         fileMenu = new Menu("File");
         runMenu = new Menu("Run");
@@ -144,11 +144,11 @@ public class WorldMenuBar extends MenuBar {
             {
                 if (isRunning) {
                     pane.stopSimulation();
-                    pane.getFarm().setPlayspeed(1000);
+                    farm.setPlayspeed(1000);
                     pane.runSimulation();
                 }
                 else
-                    pane.getFarm().setPlayspeed(1000);
+                    farm.setPlayspeed(1000);
 
             }
 
@@ -156,11 +156,11 @@ public class WorldMenuBar extends MenuBar {
             {
                 if (isRunning) {
                     pane.stopSimulation();
-                    pane.getFarm().setPlayspeed(500);
+                    farm.setPlayspeed(500);
                     pane.runSimulation();
                 }
                 else
-                    pane.getFarm().setPlayspeed(500);
+                    farm.setPlayspeed(500);
 
             }
 
@@ -168,22 +168,22 @@ public class WorldMenuBar extends MenuBar {
             {
                 if (isRunning) {
                     pane.stopSimulation();
-                    pane.getFarm().setPlayspeed(250);
+                    farm.setPlayspeed(250);
                     pane.runSimulation();
                 }
                 else
-                    pane.getFarm().setPlayspeed(250);
+                    farm.setPlayspeed(250);
             }
 
             if(event.getSource() == fourSpeedItem)
             {
                 if (isRunning) {
                     pane.stopSimulation();
-                    pane.getFarm().setPlayspeed(100);
+                    farm.setPlayspeed(100);
                     pane.runSimulation();
                 }
                 else
-                    pane.getFarm().setPlayspeed(100);
+                    farm.setPlayspeed(100);
             }
 
         }
