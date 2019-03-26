@@ -32,11 +32,11 @@ public class WorldMenuBar extends MenuBar {
     private AntFarm farm;
     private WorldPane pane;
 
-    public WorldMenuBar()
+    public WorldMenuBar(WorldPane worldPane)
     {
         handler = new MenuHandler();
-        farm = new AntFarm();
-        pane = new WorldPane();
+        farm = worldPane.getFarm();
+        pane = worldPane;
 
         fileMenu = new Menu("File");
         runMenu = new Menu("Run");
@@ -60,13 +60,13 @@ public class WorldMenuBar extends MenuBar {
         quitItem = new MenuItem("Exit");
         quitItem.setOnAction(handler);
 
-        oneSpeedItem = new MenuItem("1X Speed");
+        oneSpeedItem = new MenuItem(".5X Speed");
         oneSpeedItem.setOnAction(handler);
 
-        twoSpeedItem = new MenuItem("2X Speed");
+        twoSpeedItem = new MenuItem("1X Speed");
         twoSpeedItem.setOnAction(handler);
 
-        threeSpeedItem = new MenuItem("3X Speed");
+        threeSpeedItem = new MenuItem("2X Speed");
         threeSpeedItem.setOnAction(handler);
 
         fourSpeedItem = new MenuItem("4X Speed");
@@ -82,6 +82,8 @@ public class WorldMenuBar extends MenuBar {
 
     private class MenuHandler implements EventHandler<ActionEvent>
     {
+        private boolean isRunning = false;
+
         public void handle(ActionEvent event) {
 
             if(event.getSource() == quitItem)
@@ -89,6 +91,11 @@ public class WorldMenuBar extends MenuBar {
 
             if(event.getSource() == saveItem)
             {
+                if (isRunning) {
+                    pane.stopSimulation();
+                    isRunning = false;
+                }
+
                 FileChooser chooser = new FileChooser();
                 File status = chooser.showSaveDialog(null);
                 if(status != null) {
@@ -98,21 +105,32 @@ public class WorldMenuBar extends MenuBar {
 
             if(event.getSource() == startItem)
             {
-                
+                pane.runSimulation();
+                isRunning = true;
             }
 
             if(event.getSource() == resetItem )
             {
-
+                if (isRunning)
+                    pane.stopSimulation();
+                pane.resetWorld();
+                isRunning = false;
             }
 
             if(event.getSource() == pauseItem)
             {
-
+                if (isRunning)
+                    pane.stopSimulation();
+                isRunning = false;
             }
 
             if(event.getSource() == loadItem)
             {
+                if (isRunning) {
+                    pane.stopSimulation();
+                    isRunning = false;
+                }
+
                 FileChooser chooser = new FileChooser();
                 File status = chooser.showOpenDialog(null);
                 if(status != null)
@@ -124,27 +142,48 @@ public class WorldMenuBar extends MenuBar {
 
             if(event.getSource() == oneSpeedItem)
             {
-               farm.setPlayspeed(1000);
-               pane.runSimulation();
+                if (isRunning) {
+                    pane.stopSimulation();
+                    pane.getFarm().setPlayspeed(1000);
+                    pane.runSimulation();
+                }
+                else
+                    pane.getFarm().setPlayspeed(1000);
 
             }
 
             if(event.getSource() == twoSpeedItem)
             {
-                farm.setPlayspeed(500);
-                pane.runSimulation();
+                if (isRunning) {
+                    pane.stopSimulation();
+                    pane.getFarm().setPlayspeed(500);
+                    pane.runSimulation();
+                }
+                else
+                    pane.getFarm().setPlayspeed(500);
+
             }
 
             if(event.getSource() == threeSpeedItem)
             {
-                farm.setPlayspeed(250);
-                pane.runSimulation();
+                if (isRunning) {
+                    pane.stopSimulation();
+                    pane.getFarm().setPlayspeed(250);
+                    pane.runSimulation();
+                }
+                else
+                    pane.getFarm().setPlayspeed(250);
             }
 
             if(event.getSource() == fourSpeedItem)
             {
-                farm.setPlayspeed(100);
-                pane.runSimulation();
+                if (isRunning) {
+                    pane.stopSimulation();
+                    pane.getFarm().setPlayspeed(100);
+                    pane.runSimulation();
+                }
+                else
+                    pane.getFarm().setPlayspeed(100);
             }
 
         }

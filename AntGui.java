@@ -13,8 +13,9 @@ public class AntGui extends Application {
         primaryStage.setTitle("Land of Unchecked Ant Shenanigans!");
 
         BorderPane root = new BorderPane();
-        WorldMenuBar menuBar = new WorldMenuBar();
+
         WorldPane worldTiles = new WorldPane();
+        WorldMenuBar menuBar = new WorldMenuBar(worldTiles);
 
         root.setTop(menuBar);
         root.setCenter(worldTiles);
@@ -23,7 +24,7 @@ public class AntGui extends Application {
         primaryStage.setScene(worldMap);
         primaryStage.show();
 
-        worldTiles.runSimulation();
+        //worldTiles.runSimulation();
     }
 
 

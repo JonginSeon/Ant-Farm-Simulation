@@ -13,6 +13,7 @@ public class WorldPane extends AnchorPane {
 
     private Button[][] world;
     private AntFarm farm;
+    private Timer time;
 
     public WorldPane() {
 
@@ -36,6 +37,10 @@ public class WorldPane extends AnchorPane {
         getChildren().add(tilePane);
     }
 
+    public AntFarm getFarm()
+    {
+        return this.farm;
+    }
 
     private void createWorld(TilePane tilePane, ButtonHandler handler) {
         Button btn;
@@ -76,9 +81,15 @@ public class WorldPane extends AnchorPane {
         }
     }
 
+    public void resetWorld()
+    {
+        this.farm = new AntFarm();
+        updateWorld(farm.getScreen());
+    }
+
     public void runSimulation()
     {
-        Timer time = new Timer();
+        time = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -90,7 +101,12 @@ public class WorldPane extends AnchorPane {
             }
         };
 
-        time.schedule(task, 3000, farm.getPlayspeed());
+        time.schedule(task, 0, farm.getPlayspeed());
+    }
+
+    public void stopSimulation()
+    {
+        time.cancel();
     }
 
     private class ButtonHandler implements EventHandler<ActionEvent> {
