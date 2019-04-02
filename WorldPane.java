@@ -192,7 +192,7 @@ public class WorldPane extends AnchorPane {
 
                 //   System.out.print("Moving...");
 
-                farm.moveRandom(ant1);
+                farm.moveRandomDiag(ant1);
 
                 //   System.out.print(" Updating...");
 

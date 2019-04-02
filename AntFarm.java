@@ -73,19 +73,8 @@ public class AntFarm {
 
 
     public void moveRandom(Ant ant) {
-
         Random rn = new Random();
-
         int direction = rn.nextInt(4) + 1;
-
-
-
-//         while (isSafeDirection(direction, antLocX, antLocY) == false)
-
-//             direction = rn.nextInt(4) + 1;
-
-
-
         switch (direction) {
             case 1:
                 ant.setLocX(ant.getLocX() - 1);
@@ -128,6 +117,67 @@ public class AntFarm {
                     break;
                 }
                 screen[ant.getLocX()][ant.getLocY() + 1] = Tile.T;
+                screen[ant.getLocX()][ant.getLocY()] = Tile.A;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void moveRandomDiag(Ant ant) {
+        Random rn = new Random();
+        int direction = rn.nextInt(4) + 1;
+        switch (direction) {
+            case 1:
+                ant.setLocX(ant.getLocX() - 1);
+                ant.setLocY(ant.getLocY() - 1);
+                if (antOutOfBounds(ant)) {
+                    ant.setLocX(ant.getLocX() + 1);
+                    ant.setLocY(ant.getLocY() + 1);
+                    moveRandom(ant);
+                    break;
+                }
+                screen[ant.getLocX() + 1][ant.getLocY() + 1] = Tile.T;
+                screen[ant.getLocX()][ant.getLocY()] = Tile.A;
+                break;
+
+            case 2:
+                ant.setLocX(ant.getLocX() - 1);
+                ant.setLocY(ant.getLocY() + 1);
+                if (antOutOfBounds(ant)) {
+                    ant.setLocX(ant.getLocX() + 1);
+                    ant.setLocY(ant.getLocY() - 1);
+                    moveRandom(ant);
+                    break;
+                }
+                screen[ant.getLocX() + 1][ant.getLocY() - 1] = Tile.T;
+                screen[ant.getLocX()][ant.getLocY()] = Tile.A;
+                break;
+
+            case 3:
+                ant.setLocX(ant.getLocX() + 1);
+                ant.setLocY(ant.getLocY() - 1);
+                if (antOutOfBounds(ant)) {
+                    ant.setLocX(ant.getLocX() - 1);
+                    ant.setLocY(ant.getLocY() + 1);
+                    moveRandom(ant);
+                    break;
+                }
+                screen[ant.getLocX() - 1][ant.getLocY() + 1] = Tile.T;
+                screen[ant.getLocX()][ant.getLocY()] = Tile.A;
+                break;
+
+            case 4:
+                ant.setLocX(ant.getLocX() + 1);
+                ant.setLocY(ant.getLocY() + 1);
+                if (antOutOfBounds(ant)) {
+                    ant.setLocX(ant.getLocX() - 1);
+                    ant.setLocY(ant.getLocY() - 1);
+                    moveRandom(ant);
+                    break;
+                }
+                screen[ant.getLocX() - 1][ant.getLocY() - 1] = Tile.T;
                 screen[ant.getLocX()][ant.getLocY()] = Tile.A;
                 break;
 
