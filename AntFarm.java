@@ -16,10 +16,6 @@ public class AntFarm {
 
     private static Tile[][] screen;
 
-    private int antLocX;
-
-    private int antLocY;
-
     private int playspeed;
 
 
@@ -45,12 +41,6 @@ public class AntFarm {
             }
 
         }
-
-
-
-        antLocX = 10;
-
-        antLocY = 50;
 
         playspeed = 500;
 
@@ -82,7 +72,7 @@ public class AntFarm {
 
 
 
-    public void moveRandom() {
+    public void moveRandom(Ant ant) {
 
         Random rn = new Random();
 
@@ -97,108 +87,53 @@ public class AntFarm {
 
 
         switch (direction) {
-
             case 1:
-
-
-
-                if (antOutOfBounds(antLocX - 1, antLocY)) {
-                    moveRandom();
+                ant.setLocX(ant.getLocX() - 1);
+                if (antOutOfBounds(ant)) {
+                    ant.setLocX(ant.getLocX() + 1);
+                    moveRandom(ant);
                     break;
                 }
-
-
-
-                screen[antLocX][antLocY] = Tile.T;
-
-                antLocX = antLocX - 1;
-
-                screen[antLocX][antLocY] = Tile.A;
-
+                screen[ant.getLocX() + 1][ant.getLocY()] = Tile.T;
+                screen[ant.getLocX()][ant.getLocY()] = Tile.A;
                 break;
-
-
 
             case 2:
-
-                if (antOutOfBounds(antLocX, antLocY + 1)) {
-
-
-
-                    moveRandom();
-
-
-
+                ant.setLocY(ant.getLocY() + 1);
+                if (antOutOfBounds(ant)) {
+                    ant.setLocY(ant.getLocY() - 1);
+                    moveRandom(ant);
                     break;
-
-
-
                 }
-
-                screen[antLocX][antLocY] = Tile.T;
-
-                antLocY = antLocY + 1;
-
-                screen[antLocX][antLocY] = Tile.A;
-
+                screen[ant.getLocX()][ant.getLocY() - 1] = Tile.T;
+                screen[ant.getLocX()][ant.getLocY()] = Tile.A;
                 break;
-
-
 
             case 3:
-
-                if (antOutOfBounds(antLocX + 1, antLocY)) {
-
-
-
-                    moveRandom();
-
-
-
+                ant.setLocX(ant.getLocX() + 1);
+                if (antOutOfBounds(ant)) {
+                    ant.setLocX(ant.getLocX() - 1);
+                    moveRandom(ant);
                     break;
-
-
-
                 }
-
-                screen[antLocX][antLocY] = Tile.T;
-
-                antLocX = antLocX + 1;
-
-                screen[antLocX][antLocY] = Tile.A;
-
+                screen[ant.getLocX() - 1][ant.getLocY()] = Tile.T;
+                screen[ant.getLocX()][ant.getLocY()] = Tile.A;
                 break;
-
-
 
             case 4:
-
-                if (antOutOfBounds(antLocX, antLocY - 1)) {
-
-                    moveRandom();
-
+                ant.setLocY(ant.getLocY() - 1);
+                if (antOutOfBounds(ant)) {
+                    ant.setLocY(ant.getLocY() + 1);
+                    moveRandom(ant);
                     break;
-
                 }
-
-
-
-                screen[antLocX][antLocY] = Tile.T;
-
-                antLocY = antLocY - 1;
-
-                screen[antLocX][antLocY] = Tile.A;
-
+                screen[ant.getLocX()][ant.getLocY() + 1] = Tile.T;
+                screen[ant.getLocX()][ant.getLocY()] = Tile.A;
                 break;
-
-
 
             default:
-
                 break;
-
         }
-
     }
 
 
@@ -253,9 +188,9 @@ public class AntFarm {
 
 
 
-    public boolean antOutOfBounds(int antLocX, int antLocY) {
+    public boolean antOutOfBounds(Ant ant) {
 
-        if (antLocX < 0 || antLocX >= screen.length) //Used to be 100
+        if (ant.getLocX() < 0 || ant.getLocX() >= screen.length) //Used to be 100
 
         {
 
@@ -263,13 +198,13 @@ public class AntFarm {
 
         }
 
-        if (antLocY < 0 || antLocY >= screen.length) {
+        if (ant.getLocY() < 0 || ant.getLocY() >= screen.length) {
 
             return true;
 
         }
 
-        if (screen[antLocX][antLocY] == Tile.S)
+        if (screen[ant.getLocX()][ant.getLocY()] == Tile.S)
 
             return true;
 
@@ -313,8 +248,8 @@ public class AntFarm {
                     {
                         System.out.println("row " + r);
                         System.out.println("col " + c);
-                        antLocX = r;
-                        antLocY = c;
+                        //antLocX = r;
+                        //antLocY = c;
                     }
                     screen[r][c] = Tile.valueOf(t);
                 }

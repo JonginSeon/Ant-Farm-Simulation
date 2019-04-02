@@ -182,6 +182,8 @@ public class WorldPane extends AnchorPane {
 
         time = new Timer();
 
+        Ant ant1 = new Ant();
+
         TimerTask task = new TimerTask() {
 
             @Override
@@ -190,7 +192,7 @@ public class WorldPane extends AnchorPane {
 
                 //   System.out.print("Moving...");
 
-                farm.moveRandom();
+                farm.moveRandom(ant1);
 
                 //   System.out.print(" Updating...");
 
