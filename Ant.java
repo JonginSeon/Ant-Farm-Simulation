@@ -25,10 +25,13 @@ public class Ant
     }
 
     public int getLocY() {
+
         return LocY;
+
     }
 
     public Tile getAntTile() {
         return antTile;
     }
+
 }
