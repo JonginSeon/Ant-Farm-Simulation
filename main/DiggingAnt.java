@@ -15,7 +15,7 @@ public class DiggingAnt implements Ant {
 
     public  DiggingAnt(){
 
-        antTile = Tile.Digger;
+        antTile = Tile.G;
         LocX = 10;
         LocY = 50;
         screen = farm.getScreen();
@@ -25,73 +25,7 @@ public class DiggingAnt implements Ant {
     public Tile[][] getScreen(){
         return screen;
     }
-    @Override
-    public void moveRandom() {
-        Random rn = new Random();
-        int direction = rn.nextInt(4) + 1;
-        switch (direction) {
-            case 1:
-                setLocX(getLocX() - 1);
-                if (antOutOfBounds()) {
-                    setLocX(getLocX() + 1);
-                    moveRandom();
-                    break;
-                }
-                screen[getLocX() + 1][getLocY()] = Tile.T;
-                screen[getLocX()][getLocY()] = getAntTile();
-                break;
 
-            case 2:
-                setLocY(getLocY() + 1);
-                if (antOutOfBounds()) {
-                    setLocY(getLocY() - 1);
-                    moveRandom();
-                    break;
-                }
-                screen[getLocX()][getLocY() - 1] = Tile.T;
-                screen[getLocX()][getLocY()] = getAntTile();
-                break;
-
-            case 3:
-                setLocX(getLocX() + 1);
-                if (antOutOfBounds()) {
-                    setLocX(getLocX() - 1);
-                    moveRandom();
-                    break;
-                }
-                screen[getLocX() - 1][getLocY()] = Tile.T;
-                screen[getLocX()][getLocY()] = getAntTile();
-                break;
-
-            case 4:
-                setLocY(getLocY() - 1);
-                if (antOutOfBounds()) {
-                    setLocY(getLocY() + 1);
-                    moveRandom();
-                    break;
-                }
-                screen[getLocX()][getLocY() + 1] = Tile.T;
-                screen[getLocX()][getLocY()] = getAntTile();
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    public boolean antOutOfBounds() {
-        if (getLocX() < 0 || getLocX() > 100) //Used to be 100
-        {
-            return true;
-        }
-        if (getLocY() < 0 || getLocY() > 100) {
-            return true;
-        }
-        if (screen[getLocX()][getLocY()] == Tile.S)
-            return true;
-        else
-            return false;
-    }
     @Override
     public void setLocX(int locX) {
         LocX = locX;
@@ -114,7 +48,7 @@ public class DiggingAnt implements Ant {
 
     @Override
     public Tile getAntTile() {
-        antTile = Tile.Digger;
+        antTile = Tile.G;
         return antTile;
     }
 

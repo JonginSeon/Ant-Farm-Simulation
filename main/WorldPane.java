@@ -18,9 +18,9 @@ public class WorldPane extends AnchorPane {
     private Label[][] world;
     private Cell[][] temp;
     private AntFarm farm;
-    Ant digger = new DiggingAnt();
-    Ant worker = new WorkingAnt();
-    Ant queen = new Queen();
+    private Ant digger = new DiggingAnt();
+    private Ant worker = new WorkingAnt();
+    private Ant queen = new Queen();
 
 
     private Timer time;
@@ -129,24 +129,24 @@ public class WorldPane extends AnchorPane {
                 //tile2 = red, worker
                 //tile3 = pink, Queen
 
-                else if (tile1[r][c] == Tile.Digger && tile2[r][c] == Tile.T && tile3[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: Yellow");
-                else if (tile1[r][c] == Tile.Digger && tile2[r][c] == Tile.D && tile3[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: Yellow");
-                else if (tile1[r][c] == Tile.Digger && tile2[r][c] == Tile.T && tile3[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: Yellow");
-                else if (tile1[r][c] == Tile.Digger && tile2[r][c] == Tile.D && tile3[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: Yellow");
+                else if (tile1[r][c] == Tile.G && tile2[r][c] == Tile.T && tile3[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: Yellow");
+                else if (tile1[r][c] == Tile.G && tile2[r][c] == Tile.D && tile3[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: Yellow");
+                else if (tile1[r][c] == Tile.G && tile2[r][c] == Tile.T && tile3[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: Yellow");
+                else if (tile1[r][c] == Tile.G && tile2[r][c] == Tile.D && tile3[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: Yellow");
 
 
 
-                else if (tile2[r][c] == Tile.Worker && tile1[r][c] == Tile.T && tile3[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: red");
-                else if (tile2[r][c] == Tile.Worker && tile1[r][c] == Tile.D && tile3[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: red");
-                else if (tile2[r][c] == Tile.Worker && tile1[r][c] == Tile.T && tile3[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: red");
-                else if (tile2[r][c] == Tile.Worker && tile1[r][c] == Tile.D && tile3[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: red");
+                else if (tile2[r][c] == Tile.W && tile1[r][c] == Tile.T && tile3[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: red");
+                else if (tile2[r][c] == Tile.W && tile1[r][c] == Tile.D && tile3[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: red");
+                else if (tile2[r][c] == Tile.W && tile1[r][c] == Tile.T && tile3[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: red");
+                else if (tile2[r][c] == Tile.W && tile1[r][c] == Tile.D && tile3[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: red");
 
 
 
-                else if (tile3[r][c] == Tile.Queen && tile2[r][c] == Tile.T && tile1[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: pink");
-                else if (tile3[r][c] == Tile.Queen && tile2[r][c] == Tile.D && tile1[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: pink");
-                else if (tile3[r][c] == Tile.Queen && tile2[r][c] == Tile.T && tile1[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: pink");
-                else if (tile3[r][c] == Tile.Queen && tile2[r][c] == Tile.D && tile1[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: pink");
+                else if (tile3[r][c] == Tile.Q && tile2[r][c] == Tile.T && tile1[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: pink");
+                else if (tile3[r][c] == Tile.Q && tile2[r][c] == Tile.D && tile1[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: pink");
+                else if (tile3[r][c] == Tile.Q && tile2[r][c] == Tile.T && tile1[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: pink");
+                else if (tile3[r][c] == Tile.Q && tile2[r][c] == Tile.D && tile1[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: pink");
 
                
 
@@ -174,10 +174,10 @@ public class WorldPane extends AnchorPane {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-
-                digger.moveRandom();
-                worker.moveRandom();
-                queen.moveRandom();
+                Behavior antBehavior = new Behavior();
+                antBehavior.moveRandom(digger, digger.getScreen());
+                antBehavior.moveRandom(worker, worker.getScreen());
+                antBehavior.moveRandom(queen, queen.getScreen());
 
 
 
