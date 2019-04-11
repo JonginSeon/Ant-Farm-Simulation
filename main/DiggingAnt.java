@@ -21,10 +21,7 @@ public class DiggingAnt implements Ant {
         screen = farm.getScreen();
         playSpeed=farm.getPlayspeed();
     }
-    @Override
-    public Tile[][] getScreen(){
-        return screen;
-    }
+
 
     @Override
     public void setLocX(int locX) {

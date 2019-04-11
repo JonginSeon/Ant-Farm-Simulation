@@ -97,9 +97,10 @@ public class AntFarm {
         }
 
         //TODO Combine with constructor above
-        public void load (File file, Tile[][]screen, Ant ant){
+        public void load (File file, Tile[][]screen, Ant[] ants){
             try {
                 Scanner fileReader = new Scanner(file);
+                int i = 0;
                 for (int r = 0; r < screen.length; r++) {
 
                     for (int c = 0; c < screen.length; c++) {
@@ -109,8 +110,9 @@ public class AntFarm {
                         if (t.equalsIgnoreCase("A")) {
                             System.out.println("row " + r);
                             System.out.println("col " + c);
-                            ant.setLocX(r);
-                            ant.setLocY(c);
+                            ants[i].setLocX(r);
+                            ants[i].setLocY(c);
+                            i++;
                         }
                         screen[r][c] = Tile.valueOf(t);
 

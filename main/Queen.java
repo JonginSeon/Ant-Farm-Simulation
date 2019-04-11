@@ -22,14 +22,10 @@ public class Queen implements Ant {
     }
 
     @Override
-    public Tile[][] getScreen(){
-        return screen;
-    }
-
-    @Override
     public void setLocX(int locX) {
         LocX = locX;
     }
+
     @Override
     public void setLocY(int locY) {
         LocY = locY;
@@ -41,9 +37,7 @@ public class Queen implements Ant {
     }
     @Override
     public int getLocY() {
-
         return LocY;
-
     }
 
     @Override

@@ -18,8 +18,8 @@ public class WorldPane extends AnchorPane {
     private Label[][] world;
     private Cell[][] temp;
     private AntFarm farm;
-    private Ant digger = new DiggingAnt();
-    private Ant worker = new WorkingAnt();
+    int numberOfAnts = 0;
+    private Ant[] ants = new Ant[10];
     private Ant queen = new Queen();
 
 
@@ -65,6 +65,9 @@ public class WorldPane extends AnchorPane {
 
     public void createWorld(TilePane tilePane) {
 
+        ants[0] = queen;
+        numberOfAnts += 1;
+
         Button btn;
         Label btn1;
         this.world = new Label[100][100];
@@ -96,60 +99,33 @@ public class WorldPane extends AnchorPane {
         }
     }
 
-    public void updateWorld(Tile[][] tile1,Tile[][] tile2,Tile[][] tile3)
+    public void updateWorld(Tile[][] screen)
     {
 
         for (int r = 0; r < 100; r++) {
 
             for (int c = 0; c < 100; c++) {
                 //only sky
-                if (tile1[r][c] == Tile.S && tile2[r][c] == Tile.S && tile3[r][c] == Tile.S)
+                if (screen[r][c] == Tile.S)
                     this.world[r][c].setStyle("-fx-background-color: DeepSkyBlue");
+
                 //only dirt
-                else if (tile1[r][c] == Tile.D && tile2[r][c] == Tile.D && tile3[r][c] == Tile.D)
+                else if (screen[r][c] == Tile.D)
                     this.world[r][c].setStyle("-fx-background-color: Peru");
 
 
                 //only tile
-                else if (tile1[r][c] == Tile.T && tile2[r][c] == Tile.T && tile3[r][c] == Tile.T)
+                else if (screen[r][c] == Tile.T)
                     this.world[r][c].setStyle("-fx-background-color: Black");
 
+                else if (screen[r][c] == Tile.Q)
+                    this.world[r][c].setStyle("-fx-background-color: Pink");
 
+                else if (screen[r][c] == Tile.G)
+                    this.world[r][c].setStyle("-fx-background-color: Yellow");
 
-                //tile vs dirt   t = 0 D = 1
-                else if (tile1[r][c] == Tile.T && tile2[r][c] == Tile.T && tile3[r][c] == Tile.D) this.world[r][c].setStyle("-fx-background-color: Black");
-                else if (tile1[r][c] == Tile.T && tile2[r][c] == Tile.D && tile3[r][c] == Tile.D) this.world[r][c].setStyle("-fx-background-color: Black");
-                else if (tile1[r][c] == Tile.T && tile2[r][c] == Tile.D && tile3[r][c] == Tile.T) this.world[r][c].setStyle("-fx-background-color: Black");
-                else if (tile1[r][c] == Tile.D && tile2[r][c] == Tile.T && tile3[r][c] == Tile.T) this.world[r][c].setStyle("-fx-background-color: Black");
-                else if (tile1[r][c] == Tile.D && tile2[r][c] == Tile.T && tile3[r][c] == Tile.D) this.world[r][c].setStyle("-fx-background-color: Black");
-                else if (tile1[r][c] == Tile.D && tile2[r][c] == Tile.D && tile3[r][c] == Tile.T) this.world[r][c].setStyle("-fx-background-color: Black");
-
-
-                //tile1 = yellow ,digger
-                //tile2 = red, worker
-                //tile3 = pink, Queen
-
-                else if (tile1[r][c] == Tile.G && tile2[r][c] == Tile.T && tile3[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: Yellow");
-                else if (tile1[r][c] == Tile.G && tile2[r][c] == Tile.D && tile3[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: Yellow");
-                else if (tile1[r][c] == Tile.G && tile2[r][c] == Tile.T && tile3[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: Yellow");
-                else if (tile1[r][c] == Tile.G && tile2[r][c] == Tile.D && tile3[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: Yellow");
-
-
-
-                else if (tile2[r][c] == Tile.W && tile1[r][c] == Tile.T && tile3[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: red");
-                else if (tile2[r][c] == Tile.W && tile1[r][c] == Tile.D && tile3[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: red");
-                else if (tile2[r][c] == Tile.W && tile1[r][c] == Tile.T && tile3[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: red");
-                else if (tile2[r][c] == Tile.W && tile1[r][c] == Tile.D && tile3[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: red");
-
-
-
-                else if (tile3[r][c] == Tile.Q && tile2[r][c] == Tile.T && tile1[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: pink");
-                else if (tile3[r][c] == Tile.Q && tile2[r][c] == Tile.D && tile1[r][c] == Tile.T)this.world[r][c].setStyle("-fx-background-color: pink");
-                else if (tile3[r][c] == Tile.Q && tile2[r][c] == Tile.T && tile1[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: pink");
-                else if (tile3[r][c] == Tile.Q && tile2[r][c] == Tile.D && tile1[r][c] == Tile.D)this.world[r][c].setStyle("-fx-background-color: pink");
-
-               
-
+                else if (screen[r][c] == Tile.W)
+                    this.world[r][c].setStyle("-fx-background-color: Red");
             }
         }
     }
@@ -157,12 +133,14 @@ public class WorldPane extends AnchorPane {
     public void resetWorld()
     {
         this.farm = new AntFarm();
-        updateWorld(farm.getScreen(),farm.getScreen(),farm.getScreen());
+        updateWorld(farm.getScreen());
         //updateWorld(farm.getScreen(),farm.getScreen());
-        this.worker = new WorkingAnt();
-        this.digger = new DiggingAnt();
+        this.ants = new Ant[10];
+        this.numberOfAnts = 0;
         this.queen = new Queen();
-        updateWorld(digger.getScreen(),worker.getScreen(), queen.getScreen());
+        ants[0] = queen;
+        numberOfAnts += 1;
+        updateWorld(farm.getScreen());
         //updateWorld(digger.getScreen(),worker.getScreen());
 
     }
@@ -175,13 +153,27 @@ public class WorldPane extends AnchorPane {
             @Override
             public void run() {
                 Behavior antBehavior = new Behavior();
-                antBehavior.moveRandom(digger, digger.getScreen());
-                antBehavior.moveRandom(worker, worker.getScreen());
-                antBehavior.moveRandom(queen, queen.getScreen());
+                Tile currentAnt;
+                for (int i = 0; i < numberOfAnts; i++) {
+                    currentAnt = ants[i].getAntTile();
+                    switch(currentAnt) {
+                        case Q:
+                            antBehavior.moveRandom(ants[i], farm.getScreen());
+                            break;
+
+                        case W:
+                            antBehavior.moveRandomCross(ants[i], farm.getScreen());
+                            break;
+
+                        case G:
+                            antBehavior.moveRandomDiag(ants[i], farm.getScreen());
+                            break;
+                    }
+                }
 
 
 
-                updateWorld(digger.getScreen(),worker.getScreen(),queen.getScreen());
+                updateWorld(farm.getScreen());
                 //updateWorld(digger.getScreen(),worker.getScreen());
             }
         };
@@ -190,14 +182,22 @@ public class WorldPane extends AnchorPane {
     }
 
     public void update(){
-        updateWorld(digger.getScreen(),worker.getScreen(), queen.getScreen());
+        updateWorld(farm.getScreen());
         //updateWorld(digger.getScreen(),worker.getScreen());
        // updateWorld(farm.get(0).getScreenFromAL(),farm.get(1).getScreenFromAL());
 
     }
 
-    public Ant getAnt() {
-        return digger;
+    public Ant[] getAnts() {
+        return ants;
+    }
+
+    public int getNumberOfAnts() {
+        return numberOfAnts;
+    }
+
+    public void setNumberOfAnts(int numberOfAnts) {
+        this.numberOfAnts = numberOfAnts;
     }
 
     public void stopSimulation()

@@ -17,6 +17,8 @@ public class WorldMenuBar extends MenuBar {
 
     private Menu runMenu;
 
+    private Menu antMenu;
+
     private MenuItem startItem;
 
     private MenuItem pauseItem;
@@ -29,6 +31,9 @@ public class WorldMenuBar extends MenuBar {
 
     private MenuItem quitItem;
 
+    private MenuItem workAntItem;
+
+    private MenuItem digAntItem;
 
     private MenuItem oneSpeedItem;
 
@@ -40,12 +45,9 @@ public class WorldMenuBar extends MenuBar {
 
 
     private AntFarm farm;
-    private Ant Ants;
 
     private WorldPane pane;
 
-    Ant workingAnt = new WorkingAnt();
-    Ant diggAnt = new DiggingAnt();
 
 
     public WorldMenuBar(WorldPane worldPane)
@@ -59,10 +61,13 @@ public class WorldMenuBar extends MenuBar {
 
         fileMenu = new Menu("File");
 
+        antMenu = new Menu("Add Ants");
 
         runMenu = new Menu("Run");
 
         speedMenu = new Menu("Speeds");
+
+
 
 
 
@@ -95,6 +100,13 @@ public class WorldMenuBar extends MenuBar {
 
         quitItem.setOnAction(handler);
 
+        workAntItem = new MenuItem("Working Ant");
+
+        workAntItem.setOnAction(handler);
+
+        digAntItem = new MenuItem("Digging Ant");
+
+        digAntItem.setOnAction(handler);
 
         oneSpeedItem = new MenuItem(".5X Speed");
 
@@ -116,14 +128,16 @@ public class WorldMenuBar extends MenuBar {
         fourSpeedItem.setOnAction(handler);
 
 
-        fileMenu.getItems().addAll(saveItem, loadItem);
+        fileMenu.getItems().addAll(saveItem, loadItem, quitItem);
 
-        runMenu.getItems().addAll(startItem, pauseItem, resetItem, quitItem);
+        runMenu.getItems().addAll(startItem, pauseItem, resetItem);
+
+        antMenu.getItems().addAll(workAntItem, digAntItem);
 
         speedMenu.getItems().addAll(oneSpeedItem, twoSpeedItem, threeSpeedItem, fourSpeedItem);
 
 
-        getMenus().addAll(fileMenu, runMenu, speedMenu);
+        getMenus().addAll(fileMenu, runMenu, speedMenu, antMenu);
 
 
 
@@ -198,10 +212,28 @@ public class WorldMenuBar extends MenuBar {
                 File status = chooser.showOpenDialog(null);
                 if(status != null)
                 {
-                    farm.load(status, farm.getScreen(), pane.getAnt());
+                    farm.load(status, farm.getScreen(), pane.getAnts());
                     pane.update();
 
                 }
+            }
+
+            if(event.getSource() == workAntItem)
+            {
+                Ant[] ants = pane.getAnts();
+                int numberOfAnts = pane.getNumberOfAnts();
+
+                ants[numberOfAnts] = new WorkingAnt();
+                pane.setNumberOfAnts(++numberOfAnts);
+            }
+
+            if(event.getSource() == digAntItem)
+            {
+                Ant[] ants = pane.getAnts();
+                int numberOfAnts = pane.getNumberOfAnts();
+
+                ants[numberOfAnts] = new DiggingAnt();
+                pane.setNumberOfAnts(++numberOfAnts);
             }
 
             if(event.getSource() == oneSpeedItem)

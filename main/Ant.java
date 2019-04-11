@@ -7,5 +7,4 @@ public interface Ant
     int getLocX();
     int getLocY();
     Tile getAntTile();
-    Tile[][] getScreen();
 }

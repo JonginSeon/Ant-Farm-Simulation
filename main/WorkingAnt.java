@@ -21,10 +21,6 @@ public class WorkingAnt implements Ant{
 
     }
 
-    @Override
-    public Tile[][] getScreen(){
-        return screen;
-    }
 
     @Override
     public void setLocX(int locX) {
