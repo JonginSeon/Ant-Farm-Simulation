@@ -3,27 +3,27 @@ package main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class AntFarm {
     private Tile[][] screen;
-    private Tile[][] temp= new Tile[100][100];
-    private Tile[][] temp2= new Tile[100][100];
-    private Tile[][] temp3= new Tile[100][100];
-    private ArrayList<AntType> type = new ArrayList<AntType>();
-    AntGui gui = new AntGui();
+
 
     private int playspeed;
-    private int[] speedInfo;
 
 
     public AntFarm() {
 
         screen = new Tile[100][100];
+        Random rn = new Random();
 
         int i;
+        int ranK=0;
+        int ranJ=0;
+
         for (int j = 0; j < 100; j++) {
+
             for (i = 0; i < 10; i++) {
                 screen[i][j] = Tile.S;
 
@@ -34,23 +34,71 @@ public class AntFarm {
             }
         }
         playspeed=500;
-    }
 
-    //add an Ant to list
-    public void add(AntType c) {
-        type.add(c);
+       for(int n= 0; n<30;  n++){
+            ranK = rn.nextInt(100) + 10;
+            ranJ = rn.nextInt(100) + 1;
+            if(ranK<100 && ranJ<100)
+            screen[ranK][ranJ] = Tile.F;
 
-    }
-
-    public AntType get(int i) {
-        return type.get(i);
+        }
 
     }
+    public int foodCounter(Tile[][] screen){
+        int counter=0;
+        for (int j = 0; j < 100; j++) {
 
-    public int getSize() {
-       // System.out.println(type.size());
-        return type.size();
+            for (int i= 10; i < 100; i++) {
+                if(screen[i][j] == Tile.F){
+                counter++;
+                }
+            }
+        }
+        return counter;
+
     }
+    public int WorkingantCounter(Tile[][] screen){
+        int counter=0;
+        for (int j = 0; j < 100; j++) {
+
+            for (int i= 10; i < 100; i++) {
+                if(screen[i][j] == Tile.W){
+                    counter++;
+                }
+            }
+        }
+        return counter;
+
+
+    }
+    public int DiggingAntCounter(Tile[][] screen){
+        int counter=0;
+        for (int j = 0; j < 100; j++) {
+
+            for (int i= 10; i < 100; i++) {
+                if(screen[i][j] == Tile.G){
+                    counter++;
+                }
+            }
+        }
+        return counter;
+
+    }
+
+    public int queenCounter(Tile[][] screen){
+        int counter=0;
+        for (int j = 0; j < 100; j++) {
+
+            for (int i= 10; i < 100; i++) {
+                if(screen[i][j] == Tile.Q){
+                    counter++;
+                }
+            }
+        }
+        return counter;
+
+    }
+
 
     public Tile[][] getScreen() {
 
@@ -71,8 +119,6 @@ public class AntFarm {
 
     public void save (Tile[][]screen, File file){
 
-            //String fileName = "Saved Game";
-
             PrintWriter out = null;
 
             try {
@@ -86,11 +132,8 @@ public class AntFarm {
                         out.println(screen[r][c].name());
 
                     }
-
                 }
-
                 out.close();
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -115,11 +158,8 @@ public class AntFarm {
                             i++;
                         }
                         screen[r][c] = Tile.valueOf(t);
-
                     }
-
                 }
-
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

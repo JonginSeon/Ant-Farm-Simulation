@@ -21,12 +21,9 @@ public class AntGui extends Application {
         root.setCenter(worldTiles);
 
         Scene worldMap = new Scene(root,1000, 950);
-       // worldMap.getStylesheets().add("C:/Users/Seon/IdeaProjects/CIS350/.css/coverage.css");
-
-
         primaryStage.setScene(worldMap);
         primaryStage.show();
-       // primaryStage.setMaximized(true);
+
 
     }
     public static void main(String[] args) {

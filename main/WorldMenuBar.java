@@ -1,9 +1,15 @@
 package main;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.File;
 
@@ -18,6 +24,8 @@ public class WorldMenuBar extends MenuBar {
     private Menu runMenu;
 
     private Menu antMenu;
+
+    private Menu infoMenu;
 
     private MenuItem startItem;
 
@@ -34,6 +42,12 @@ public class WorldMenuBar extends MenuBar {
     private MenuItem workAntItem;
 
     private MenuItem digAntItem;
+
+    private MenuItem infoItem;
+
+    private MenuItem timeItem;
+
+    private MenuItem foodItem;
 
     private MenuItem oneSpeedItem;
 
@@ -67,9 +81,7 @@ public class WorldMenuBar extends MenuBar {
 
         speedMenu = new Menu("Speeds");
 
-
-
-
+        infoMenu = new Menu("Info");
 
         resetItem = new MenuItem("Reset");
 
@@ -108,6 +120,18 @@ public class WorldMenuBar extends MenuBar {
 
         digAntItem.setOnAction(handler);
 
+        foodItem = new MenuItem("Food");
+
+        foodItem.setOnAction(handler);
+
+        infoItem = new MenuItem("Information");
+
+        infoItem.setOnAction(handler);
+
+        timeItem = new MenuItem("Time");
+
+        timeItem.setOnAction(handler);
+
         oneSpeedItem = new MenuItem(".5X Speed");
 
         oneSpeedItem.setOnAction(handler);
@@ -132,14 +156,12 @@ public class WorldMenuBar extends MenuBar {
 
         runMenu.getItems().addAll(startItem, pauseItem, resetItem);
 
-        antMenu.getItems().addAll(workAntItem, digAntItem);
+        antMenu.getItems().addAll(workAntItem, digAntItem,foodItem);
 
         speedMenu.getItems().addAll(oneSpeedItem, twoSpeedItem, threeSpeedItem, fourSpeedItem);
 
-
-        getMenus().addAll(fileMenu, runMenu, speedMenu, antMenu);
-
-
+        infoMenu.getItems().addAll(infoItem,timeItem);
+        getMenus().addAll(fileMenu, runMenu, speedMenu, antMenu,infoMenu);
 
 
     }
@@ -153,7 +175,6 @@ public class WorldMenuBar extends MenuBar {
             {
                 System.exit(0);
             }
-
             if(event.getSource() == saveItem)
             {
                 if (isRunning) {
@@ -169,19 +190,10 @@ public class WorldMenuBar extends MenuBar {
 
             if(event.getSource() == startItem)
             {
-//                Label l = new Label("no text input");
-//                TextInputDialog td = new TextInputDialog("Enter here");
-//                td.setHeaderText("How many Ants do you want");
-//                td.showAndWait();
-//               // set the text of the label
-//                l.setText(td.getEditor().getText());
-                pane.runSimulation();
-                isRunning = true;
-
-//                AntType digger = new AntType(diggAnt.getAntTile(), diggAnt.getLocX(), diggAnt.getLocY(), diggAnt.getPlaySpeed(),diggAnt.getDiggerScreen());
-//                AntType worker = new AntType(workingAnt.getAntTile(), workingAnt.getLocX(), workingAnt.getLocY(), workingAnt.getPlaySpeed(),workingAnt.getDiggerScreen());
-//                farm.add(digger);
-//                farm.add(worker);
+                if (!isRunning) {
+                    pane.runSimulation();
+                    isRunning = true;
+                }
 
 
             }
@@ -214,10 +226,8 @@ public class WorldMenuBar extends MenuBar {
                 {
                     farm.load(status, farm.getScreen(), pane.getAnts());
                     pane.update();
-
                 }
             }
-
             if(event.getSource() == workAntItem)
             {
                 Ant[] ants = pane.getAnts();
@@ -234,7 +244,86 @@ public class WorldMenuBar extends MenuBar {
 
                 ants[numberOfAnts] = new DiggingAnt();
                 pane.setNumberOfAnts(++numberOfAnts);
+
+
+
+
             }
+            if(event.getSource() == foodItem)
+            {
+                Label l = new Label("no text input");
+                TextInputDialog td = new TextInputDialog("Enter here");
+                td.setHeaderText("How many food do you wnat?");
+                td.showAndWait();
+
+                l.setText(td.getEditor().getText());
+               Behavior behavior = new Behavior();
+               String tem =td.getEditor().getText();
+               int numberOfFood = Integer.parseInt(tem);
+               behavior.foodGenerator(numberOfFood,farm.getScreen());
+
+
+
+            }
+            if(event.getSource() == infoItem)
+            {
+
+                Stage popupwindow=new Stage();
+
+                popupwindow.initModality(Modality.APPLICATION_MODAL);
+                popupwindow.setTitle("Current Ant Farm Info");
+                String numOfFood = Integer.toString(farm.foodCounter(farm.getScreen()));
+                String numOfWorkingant = Integer.toString(farm.WorkingantCounter(farm.getScreen()));
+                String numOfDiggingant = Integer.toString(farm.DiggingAntCounter(farm.getScreen()));
+                String numOfQueen = Integer.toString(farm.queenCounter(farm.getScreen()));
+
+
+                Label label1= new Label("Food: "+numOfFood);
+                Label label2= new Label("Queen: "+numOfQueen);
+                Label label3= new Label("DiggingAnt: "+numOfDiggingant);
+                Label label4= new Label("WorkingAnt: "+numOfWorkingant);
+
+
+                Button button1= new Button("Close");
+                button1.setOnAction(e -> popupwindow.close());
+
+
+                VBox layout= new VBox(10);
+                layout.getChildren().addAll(label1,label2,label3,label4, button1);
+
+                layout.setAlignment(Pos.CENTER);
+
+                Scene scene1= new Scene(layout, 300, 250);
+                popupwindow.setScene(scene1);
+                popupwindow.showAndWait();
+
+            }
+
+            if(event.getSource() == timeItem){
+
+                Stage popupwindow=new Stage();
+                SimpleStringProperty time = (pane.getSspTime());
+
+                popupwindow.initModality(Modality.APPLICATION_MODAL);
+                popupwindow.setTitle("Current Ant Farm Time");
+
+                Label label1= new Label("Time: "+time);
+                Button button1= new Button("Close");
+                button1.setOnAction(e -> popupwindow.close());
+
+
+                VBox layout= new VBox(10);
+                layout.getChildren().addAll(label1, button1);
+
+                layout.setAlignment(Pos.CENTER);
+
+                Scene scene1= new Scene(layout, 300, 250);
+                popupwindow.setScene(scene1);
+                popupwindow.showAndWait();
+
+            }
+
+
 
             if(event.getSource() == oneSpeedItem)
             {
@@ -260,9 +349,7 @@ public class WorldMenuBar extends MenuBar {
                     pane.runSimulation();
 
                 }
-
                 else
-
                     pane.getFarm().setPlayspeed(500);
 
             }
@@ -274,30 +361,25 @@ public class WorldMenuBar extends MenuBar {
 
                     pane.stopSimulation();
                     pane.getFarm().setPlayspeed(250);
-
                     pane.runSimulation();
 
                 }
 
                 else
                     pane.getFarm().setPlayspeed(250);
-
             }
 
             if(event.getSource() == fourSpeedItem)
 
             {
-
                 if (isRunning) {
 
                     pane.stopSimulation();
                     pane.getFarm().setPlayspeed(100);
                     pane.runSimulation();
-
                 }
 
                 else
-
                     pane.getFarm().setPlayspeed(100);
             }
         }

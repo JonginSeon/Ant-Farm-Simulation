@@ -1,7 +1,5 @@
 package main;
 
-import java.util.Random;
-
 public class Queen implements Ant {
 
     private Tile antTile;
@@ -11,7 +9,6 @@ public class Queen implements Ant {
     private int playSpeed;
     AntFarm farm = new AntFarm();
 
-    //constructor
     public Queen (){
         antTile = Tile.Q;
         LocX = 10;

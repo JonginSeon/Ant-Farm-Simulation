@@ -1,7 +1,5 @@
 package main;
 
-import java.util.Random;
-
 public class DiggingAnt implements Ant {
 
 
@@ -11,7 +9,6 @@ public class DiggingAnt implements Ant {
     private  Tile[][] screen;
     private int playSpeed;
     AntFarm farm = new AntFarm();
-   // Ant ant = new WorkingAnt();
 
     public  DiggingAnt(){
 
@@ -48,6 +45,4 @@ public class DiggingAnt implements Ant {
         antTile = Tile.G;
         return antTile;
     }
-
-
 }

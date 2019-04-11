@@ -1,35 +1,36 @@
 package main;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class WorldPane extends AnchorPane {
 
     private Label[][] world;
-    private Cell[][] temp;
     private AntFarm farm;
     int numberOfAnts = 0;
     private Ant[] ants = new Ant[10];
     private Ant queen = new Queen();
+    private String[] split;
+    private SimpleStringProperty sspTime;
+    private SimpleDateFormat sdf = new SimpleDateFormat("mm:ss:S");
 
+    private long timer;
 
     private Timer time;
 
     public WorldPane() {
-
+        sspTime = new SimpleStringProperty("00:00:00");
         farm = new AntFarm();
 
-        ButtonHandler handler = new ButtonHandler();
+
 
         TilePane tilePane = new TilePane();
 
@@ -53,8 +54,6 @@ public class WorldPane extends AnchorPane {
         setLeftAnchor(tilePane, 0.0);
 
         getChildren().add(tilePane);
-        //createDefaultSkin();
-     //  getStyleClass().setAll("my-custom-control");
 
 
     }
@@ -68,32 +67,29 @@ public class WorldPane extends AnchorPane {
         ants[0] = queen;
         numberOfAnts += 1;
 
-        Button btn;
-        Label btn1;
+        Label label;
         this.world = new Label[100][100];
 
 
         for (int r = 0; r < 100; r++) {
             for (int c = 0; c < 100; c++) {
 
-               // btn = new Button();
-                btn1= new Label();
-                btn1.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-                //btn.setMinSize(setMaxWidth();,70);
+
+                label= new Label();
+                label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
                 if (r <= 10) {
-                    btn1.setStyle("-fx-background-color: DeepSkyBlue");
+                    label.setStyle("-fx-background-color: DeepSkyBlue");
 
                 } else {
 
-                    btn1.setStyle("-fx-background-color: Peru");
+                    label.setStyle("-fx-background-color: Peru");
 
                 }
 
-                //btn.setOnAction(handler);
+                tilePane.getChildren().add(label);
 
-                tilePane.getChildren().add(btn1);
-
-                this.world[r][c] = btn1;
+                this.world[r][c] = label;
 
             }
         }
@@ -126,6 +122,9 @@ public class WorldPane extends AnchorPane {
 
                 else if (screen[r][c] == Tile.W)
                     this.world[r][c].setStyle("-fx-background-color: Red");
+
+                else if (screen[r][c] == Tile.F)
+                    this.world[r][c].setStyle("-fx-background-color: purple");
             }
         }
     }
@@ -134,14 +133,14 @@ public class WorldPane extends AnchorPane {
     {
         this.farm = new AntFarm();
         updateWorld(farm.getScreen());
-        //updateWorld(farm.getScreen(),farm.getScreen());
+
         this.ants = new Ant[10];
         this.numberOfAnts = 0;
         this.queen = new Queen();
         ants[0] = queen;
         numberOfAnts += 1;
         updateWorld(farm.getScreen());
-        //updateWorld(digger.getScreen(),worker.getScreen());
+
 
     }
 
@@ -168,23 +167,34 @@ public class WorldPane extends AnchorPane {
                         case G:
                             antBehavior.moveRandomDiag(ants[i], farm.getScreen());
                             break;
+
                     }
                 }
 
 
-
+                updateTime();
                 updateWorld(farm.getScreen());
-                //updateWorld(digger.getScreen(),worker.getScreen());
             }
         };
             time.schedule(task, 0, farm.getPlayspeed());
+    }
 
+    public synchronized void updateTime() {
+        this.timer = this.timer + 10;
+        split = sdf.format(new Date(this.timer)).split(":");
+        sspTime.set(split[0] + ":" + split[1] + ":" + (split[2].length() == 1 ? "0" + split[2] : split[2].substring(0, 2)));
+    }
+
+    public synchronized long getTime() {
+        return timer;
+    }
+
+    public synchronized SimpleStringProperty getSspTime() {
+        return sspTime;
     }
 
     public void update(){
         updateWorld(farm.getScreen());
-        //updateWorld(digger.getScreen(),worker.getScreen());
-       // updateWorld(farm.get(0).getScreenFromAL(),farm.get(1).getScreenFromAL());
 
     }
 
@@ -203,20 +213,6 @@ public class WorldPane extends AnchorPane {
     public void stopSimulation()
     {
         time.cancel();
-    }
-
-    public class ButtonHandler implements EventHandler<ActionEvent> {
-
-        @Override
-        public void handle(ActionEvent event) {
-            for (int r = 0; r < 100; r++) {
-                for (int c = 0; c < 100; c++) {
-                    if (world[r][c] == event.getSource()) {
-                        world[r][c].setStyle("-fx-background-color: Black");
-                    }
-                }
-            }
-        }
     }
 
 

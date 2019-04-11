@@ -134,18 +134,23 @@ public class Behavior {
 
 
     private boolean antOutOfBounds(Ant ant, Tile[][] screen) {
-//        if(getLocX()<10 || getLocX()>12) return true;
-//
-//        if(getLocY()<50 || getLocY()>52)  return true;
-//
-//        if(screen[getLocX()][getLocY()] == Tile.S) return true;
-//
-//        else return false;
-        if (ant.getLocX() < 0 || ant.getLocX() > 100) //Used to be 100
+
+        if(ant.getAntTile() == Tile.Q) {
+            if (ant.getLocX() < 10 || ant.getLocX() > 12) return true;
+
+            if (ant.getLocY() < 50 || ant.getLocY() > 52) return true;
+
+            if (screen[ant.getLocX()][ant.getLocY()] == Tile.S) return true;
+
+            else return false;
+        }
+
+        else{
+        if (ant.getLocX() < 0 || ant.getLocX() > 50) //Used to be 100
         {
             return true;
         }
-        if (ant.getLocY() < 0 || ant.getLocY() > 100) {
+        if (ant.getLocY() < 0 || ant.getLocY() > 50) {
             return true;
         }
         if (screen[ant.getLocX()][ant.getLocY()] == Tile.S) {
@@ -153,4 +158,20 @@ public class Behavior {
         }
         return screen[ant.getLocX()][ant.getLocY()] == Tile.Q || screen[ant.getLocX()][ant.getLocY()] == Tile.G || screen[ant.getLocX()][ant.getLocY()] == Tile.W;
     }
+    }
+
+    public void foodGenerator( int n, Tile[][] screen){
+        Random rn = new Random();
+        for(int i = 0; i<n; i++) {
+            int x = rn.nextInt(89) + 10;
+            int y = rn.nextInt(99) + 1;
+            System.out.println(x);
+            //System.out.println(y);
+            if (x < 100 && y < 100) {
+                if (screen[x][y] == Tile.F) foodGenerator(i, screen);
+                else screen[x][y] = Tile.F;
+            }
+        }
+    }
 }
+
