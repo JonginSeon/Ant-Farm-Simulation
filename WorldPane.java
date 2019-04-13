@@ -102,7 +102,7 @@ public class WorldPane extends AnchorPane {
 
                 //only tile
                 else if (screen[r][c] == Tile.T)
-                    this.world[r][c].setStyle("-fx-background-color: Black");
+                    this.world[r][c].setStyle("-fx-background-color: SaddleBrown");
                 else if (screen[r][c] == Tile.Q)
                     this.world[r][c].setStyle("-fx-background-color: Pink");
                 else if (screen[r][c] == Tile.G)
@@ -110,7 +110,7 @@ public class WorldPane extends AnchorPane {
                 else if (screen[r][c] == Tile.W)
                     this.world[r][c].setStyle("-fx-background-color: Red");
                 else if (screen[r][c] == Tile.F)
-                    this.world[r][c].setStyle("-fx-background-color: purple");
+                    this.world[r][c].setStyle("-fx-background-color: Green");
             }
         }
     }
@@ -141,15 +141,15 @@ public class WorldPane extends AnchorPane {
                     currentAnt = ants[i].getAntTile();
                     switch(currentAnt) {
                         case Q:
-                            antBehavior.moveRandom(ants[i], farm.getScreen());
+                            antBehavior.digToBottom((Queen) ants[i], farm.getScreen());
                             break;
 
                         case W:
-                            antBehavior.moveRandomCross(ants[i], farm.getScreen());
+                            antBehavior.moveRandom(ants[i], farm.getScreen());
                             break;
 
                         case G:
-                            antBehavior.moveRandomDiag(ants[i], farm.getScreen());
+                            antBehavior.moveRandomCross(ants[i], farm.getScreen());
                             break;
 
                     }
