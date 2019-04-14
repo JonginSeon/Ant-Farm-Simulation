@@ -6,12 +6,12 @@ import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
 
+
 public class AntFarm {
     private Tile[][] screen;
 
-
     private int playspeed;
-
+    public  static int foodObtained;
 
     public AntFarm() {
 
@@ -35,7 +35,7 @@ public class AntFarm {
         }
         playspeed=500;
 
-       for(int n= 0; n<30;  n++){
+       for(int n= 0; n<120;  n++){
             ranK = rn.nextInt(100) + 10;
             ranJ = rn.nextInt(100) + 1;
             if(ranK<100 && ranJ<100)
@@ -44,7 +44,7 @@ public class AntFarm {
         }
 
     }
-    public int foodCounter(Tile[][] screen){
+    public int foodCounter(){
         int counter=0;
         for (int j = 0; j < 100; j++) {
 
@@ -54,9 +54,12 @@ public class AntFarm {
                 }
             }
         }
+
         return counter;
 
     }
+
+
     public int WorkingantCounter(Tile[][] screen){
         int counter=0;
         for (int j = 0; j < 100; j++) {

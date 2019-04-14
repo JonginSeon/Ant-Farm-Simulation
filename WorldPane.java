@@ -23,13 +23,15 @@ public class WorldPane extends AnchorPane {
     private AntFarm farm;
     int numberOfAnts = 0;
     private Ant[] ants = new Ant[10];
+    private int foodObtained=0;
+
     private Ant queen = new Queen();
     private String[] split;
     private SimpleStringProperty sspTime;
     private SimpleDateFormat sdf = new SimpleDateFormat("mm:ss:S");
 
     private long timer;
-
+   private int count=0;
     private Timer time;
 
     public WorldPane() {
@@ -91,6 +93,9 @@ public class WorldPane extends AnchorPane {
         for (int r = 0; r < 100; r++) {
 
             for (int c = 0; c < 100; c++) {
+
+                //if(screem[r][c] )
+
                 //only sky
                 if (screen[r][c] == Tile.S)
                     this.world[r][c].setStyle("-fx-background-color: DeepSkyBlue");
@@ -128,10 +133,21 @@ public class WorldPane extends AnchorPane {
         updateWorld(farm.getScreen());
     }
 
-    public void runSimulation()
+    public int getFoodObtained(){
+
+        return foodObtained;
+
+    }
+    public void setFoodObtained(int foodObtained){
+
+        this.foodObtained = foodObtained;
+    }
+
+
+
+       public void runSimulation()
     {
         time = new Timer();
-
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -140,8 +156,10 @@ public class WorldPane extends AnchorPane {
                 for (int i = 0; i < numberOfAnts; i++) {
                     currentAnt = ants[i].getAntTile();
                     switch(currentAnt) {
+
                         case Q:
                             antBehavior.digToBottom((Queen) ants[i], farm.getScreen());
+
                             break;
 
                         case W:
@@ -154,7 +172,17 @@ public class WorldPane extends AnchorPane {
 
                     }
                 }
+                if(antBehavior.getFoodObtained()==1){
 
+                    foodObtained++;
+                    System.out.println(foodObtained);
+                }
+
+                count = count+1;
+                if(count%5 ==0) {
+
+                antBehavior.foodGenerator(farm.getScreen());
+                }
                 updateTime();
                 updateWorld(farm.getScreen());
             }

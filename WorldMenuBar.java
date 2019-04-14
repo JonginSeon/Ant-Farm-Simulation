@@ -1,6 +1,5 @@
 package main;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -23,7 +22,7 @@ public class WorldMenuBar extends MenuBar {
 
     private Menu runMenu;
 
-    private Menu antMenu;
+    private Menu store;
 
     private Menu infoMenu;
 
@@ -64,6 +63,7 @@ public class WorldMenuBar extends MenuBar {
 
 
 
+
     public WorldMenuBar(WorldPane worldPane)
     {
 
@@ -75,7 +75,7 @@ public class WorldMenuBar extends MenuBar {
 
         fileMenu = new Menu("File");
 
-        antMenu = new Menu("Add Ants");
+        store = new Menu("Store");
 
         runMenu = new Menu("Run");
 
@@ -156,12 +156,12 @@ public class WorldMenuBar extends MenuBar {
 
         runMenu.getItems().addAll(startItem, pauseItem, resetItem);
 
-        antMenu.getItems().addAll(workAntItem, digAntItem,foodItem);
+        store.getItems().addAll(workAntItem, digAntItem,foodItem);
 
         speedMenu.getItems().addAll(oneSpeedItem, twoSpeedItem, threeSpeedItem, fourSpeedItem);
 
         infoMenu.getItems().addAll(infoItem,timeItem);
-        getMenus().addAll(fileMenu, runMenu, speedMenu, antMenu,infoMenu);
+        getMenus().addAll(fileMenu, runMenu, speedMenu, store,infoMenu);
 
 
     }
@@ -235,20 +235,72 @@ public class WorldMenuBar extends MenuBar {
 
                 Queen ant = (Queen) ants[0];
                 if (ant.getNestCenterX() != -1) {
+                    if(pane.getFoodObtained()>=10) {
                     ants[numberOfAnts] = new WorkingAnt(ant.getNestCenterX() - 1, ant.getNestCenterY());
                     pane.setNumberOfAnts(++numberOfAnts);
+                        pane.setFoodObtained(pane.getFoodObtained() - 10);
+                    }
+                    if(pane.getFoodObtained()<9) {
+
+                        Stage popupwindow2=new Stage();
+                        popupwindow2.initModality(Modality.APPLICATION_MODAL);
+                        Label label= new Label("Mine more food"+"\n"+ "current source: " + pane.getFoodObtained());
+
+
+                        Button button1= new Button("Close");
+                        button1.setOnAction(e -> popupwindow2.close());
+
+
+                        VBox layout= new VBox(10);
+                        layout.getChildren().addAll(label, button1);
+
+                        layout.setAlignment(Pos.CENTER);
+
+                        Scene scene1= new Scene(layout, 300, 250);
+                        popupwindow2.setScene(scene1);
+                        popupwindow2.showAndWait();
+
+
+                    }
+
                 }
             }
 
             if(event.getSource() == digAntItem)
-            {
+            {   Behavior behavior = new Behavior();
                 Ant[] ants = pane.getAnts();
                 int numberOfAnts = pane.getNumberOfAnts();
 
                 Queen ant = (Queen) ants[0];
                 if (ant.getNestCenterX() != -1) {
-                    ants[numberOfAnts] = new DiggingAnt(ant.getNestCenterX() - 1, ant.getNestCenterY());
-                    pane.setNumberOfAnts(++numberOfAnts);
+                    if(pane.getFoodObtained()>=2) {
+                        ants[numberOfAnts] = new DiggingAnt(ant.getNestCenterX() - 1, ant.getNestCenterY());
+                        pane.setNumberOfAnts(++numberOfAnts);
+
+                        pane.setFoodObtained(pane.getFoodObtained() - 2);
+                    }
+                    if(pane.getFoodObtained()<1) {
+
+                    Stage popupwindow1=new Stage();
+                    popupwindow1.initModality(Modality.APPLICATION_MODAL);
+                        Label label= new Label("Mine more food"+"\n"+ "current source: " + pane.getFoodObtained());
+
+
+                    Button button1= new Button("Close");
+                    button1.setOnAction(e -> popupwindow1.close());
+
+
+                    VBox layout= new VBox(10);
+                    layout.getChildren().addAll(label, button1);
+
+                    layout.setAlignment(Pos.CENTER);
+
+                    Scene scene1= new Scene(layout, 300, 250);
+                    popupwindow1.setScene(scene1);
+                    popupwindow1.showAndWait();
+
+
+                }
                 }
 
             }
@@ -263,25 +315,25 @@ public class WorldMenuBar extends MenuBar {
                Behavior behavior = new Behavior();
                String tem =td.getEditor().getText();
                int numberOfFood = Integer.parseInt(tem);
-               behavior.foodGenerator(numberOfFood,farm.getScreen());
+               behavior.foodGenerator(farm.getScreen());
 
 
 
             }
             if(event.getSource() == infoItem)
             {
-
                 Stage popupwindow=new Stage();
-
                 popupwindow.initModality(Modality.APPLICATION_MODAL);
                 popupwindow.setTitle("Current Ant Farm Info");
-                String numOfFood = Integer.toString(farm.foodCounter(farm.getScreen()));
+                String numOfFood = Integer.toString(farm.foodCounter());
                 String numOfWorkingant = Integer.toString(farm.WorkingantCounter(farm.getScreen()));
                 String numOfDiggingant = Integer.toString(farm.DiggingAntCounter(farm.getScreen()));
                 String numOfQueen = Integer.toString(farm.queenCounter(farm.getScreen()));
+                String numOfFoodObtained = Integer.toString(pane.getFoodObtained());
 
+               // Label label1= new Label("Source: "+numOfFood);
+                Label label1= new Label("Food Obtained: "+numOfFoodObtained);
 
-                Label label1= new Label("Food: "+numOfFood);
                 Label label2= new Label("Queen: "+numOfQueen);
                 Label label3= new Label("DiggingAnt: "+numOfDiggingant);
                 Label label4= new Label("WorkingAnt: "+numOfWorkingant);
@@ -304,25 +356,9 @@ public class WorldMenuBar extends MenuBar {
 
             if(event.getSource() == timeItem){
 
-                Stage popupwindow=new Stage();
-                SimpleStringProperty time = (pane.getSspTime());
-
-                popupwindow.initModality(Modality.APPLICATION_MODAL);
-                popupwindow.setTitle("Current Ant Farm Time");
-
-                Label label1= new Label("Time: "+time);
-                Button button1= new Button("Close");
-                button1.setOnAction(e -> popupwindow.close());
 
 
-                VBox layout= new VBox(10);
-                layout.getChildren().addAll(label1, button1);
 
-                layout.setAlignment(Pos.CENTER);
-
-                Scene scene1= new Scene(layout, 300, 250);
-                popupwindow.setScene(scene1);
-                popupwindow.showAndWait();
 
             }
 
