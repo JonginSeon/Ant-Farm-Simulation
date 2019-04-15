@@ -125,7 +125,7 @@ int foodObtained;
     }
 
     public void digToBottom(Queen ant, Tile[][] screen) {
-        if (ant.getLocX() < 99) {
+        if (ant.getLocX() < 70) {
             int direction = rn.nextInt(3) + 1;
             switch (direction) {
                 case 1:

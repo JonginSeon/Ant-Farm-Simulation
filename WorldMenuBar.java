@@ -15,154 +15,95 @@ import java.io.File;
 public class WorldMenuBar extends MenuBar {
 
     private MenuHandler handler;
-
     private Menu fileMenu;
-
     private Menu speedMenu;
-
     private Menu runMenu;
-
-    private Menu store;
-
+    private Menu storeMenu;
     private Menu infoMenu;
 
     private MenuItem startItem;
-
     private MenuItem pauseItem;
-
     private MenuItem resetItem;
-
     private MenuItem saveItem;
-
     private MenuItem loadItem;
-
     private MenuItem quitItem;
-
     private MenuItem workAntItem;
-
     private MenuItem digAntItem;
-
     private MenuItem infoItem;
-
     private MenuItem timeItem;
-
     private MenuItem foodItem;
-
     private MenuItem oneSpeedItem;
-
     private MenuItem twoSpeedItem;
-
     private MenuItem threeSpeedItem;
-
     private MenuItem fourSpeedItem;
 
-
     private AntFarm farm;
-
     private WorldPane pane;
-
-
-
 
     public WorldMenuBar(WorldPane worldPane)
     {
 
         handler = new MenuHandler();
-
         pane = worldPane;
-
         farm = pane.getFarm();
 
         fileMenu = new Menu("File");
-
-        store = new Menu("Store");
-
+        storeMenu = new Menu("Store");
         runMenu = new Menu("Run");
-
         speedMenu = new Menu("Speeds");
-
         infoMenu = new Menu("Info");
-
         resetItem = new MenuItem("Reset");
-
         resetItem.setOnAction(handler);
 
-
         startItem = new MenuItem("Start Simulation");
-
         startItem.setOnAction(handler);
 
-
         pauseItem = new MenuItem("Pause");
-
         pauseItem.setOnAction(handler);
 
-
         saveItem = new MenuItem("Save File");
-
         saveItem.setOnAction(handler);
 
-
         loadItem = new MenuItem("Open File");
-
         loadItem.setOnAction(handler);
 
-
         quitItem = new MenuItem("Exit");
-
         quitItem.setOnAction(handler);
 
         workAntItem = new MenuItem("Working Ant");
-
         workAntItem.setOnAction(handler);
 
         digAntItem = new MenuItem("Digging Ant");
-
         digAntItem.setOnAction(handler);
 
         foodItem = new MenuItem("Food");
-
         foodItem.setOnAction(handler);
 
         infoItem = new MenuItem("Information");
-
         infoItem.setOnAction(handler);
 
         timeItem = new MenuItem("Time");
-
         timeItem.setOnAction(handler);
 
         oneSpeedItem = new MenuItem(".5X Speed");
-
         oneSpeedItem.setOnAction(handler);
 
-
         twoSpeedItem = new MenuItem("1X Speed");
-
         twoSpeedItem.setOnAction(handler);
 
-
         threeSpeedItem = new MenuItem("2X Speed");
-
         threeSpeedItem.setOnAction(handler);
 
-
         fourSpeedItem = new MenuItem("4X Speed");
-
         fourSpeedItem.setOnAction(handler);
 
-
         fileMenu.getItems().addAll(saveItem, loadItem, quitItem);
-
         runMenu.getItems().addAll(startItem, pauseItem, resetItem);
-
-        store.getItems().addAll(workAntItem, digAntItem,foodItem);
-
+        storeMenu.getItems().addAll(workAntItem, digAntItem,foodItem);
         speedMenu.getItems().addAll(oneSpeedItem, twoSpeedItem, threeSpeedItem, fourSpeedItem);
-
         infoMenu.getItems().addAll(infoItem,timeItem);
-        getMenus().addAll(fileMenu, runMenu, speedMenu, store,infoMenu);
 
+        getMenus().addAll(fileMenu, runMenu, speedMenu, storeMenu,infoMenu);
 
     }
 
@@ -170,11 +111,31 @@ public class WorldMenuBar extends MenuBar {
     {
         private boolean isRunning = false;
 
+        private void makePopUpMenu()
+        {
+            Stage popupwindow2=new Stage();
+            popupwindow2.initModality(Modality.APPLICATION_MODAL);
+            Label label= new Label("Mine more food!"+"\n"+ "Current Food: " + pane.getFoodObtained());
+
+            Button button1= new Button("Close");
+            button1.setOnAction(e -> popupwindow2.close());
+
+            VBox layout= new VBox(10);
+            layout.getChildren().addAll(label, button1);
+
+            layout.setAlignment(Pos.CENTER);
+
+            Scene scene1= new Scene(layout, 100, 150);
+            popupwindow2.setScene(scene1);
+            popupwindow2.showAndWait();
+        }
+
         public void handle(ActionEvent event) {
             if(event.getSource() == quitItem)
             {
                 System.exit(0);
             }
+
             if(event.getSource() == saveItem)
             {
                 if (isRunning) {
@@ -194,14 +155,12 @@ public class WorldMenuBar extends MenuBar {
                     pane.runSimulation();
                     isRunning = true;
                 }
-
-
             }
+
             if(event.getSource() == resetItem )
             {
                 if (isRunning)
                     pane.stopSimulation();
-
                 pane.resetWorld();
                 isRunning = false;
             }
@@ -210,7 +169,6 @@ public class WorldMenuBar extends MenuBar {
             {
                 if (isRunning)
                     pane.stopSimulation();
-
                 isRunning = false;
             }
 
@@ -234,35 +192,17 @@ public class WorldMenuBar extends MenuBar {
                 int numberOfAnts = pane.getNumberOfAnts();
 
                 Queen ant = (Queen) ants[0];
-                if (ant.getNestCenterX() != -1) {
-                    if(pane.getFoodObtained()>=10) {
+                if (ant.getNestCenterX() != -1)
+                {
+
+                    if(pane.getFoodObtained()>=10)
+                    {
                     ants[numberOfAnts] = new WorkingAnt(ant.getNestCenterX() - 1, ant.getNestCenterY());
                     pane.setNumberOfAnts(++numberOfAnts);
                         pane.setFoodObtained(pane.getFoodObtained() - 10);
                     }
-                    if(pane.getFoodObtained()<9) {
-
-                        Stage popupwindow2=new Stage();
-                        popupwindow2.initModality(Modality.APPLICATION_MODAL);
-                        Label label= new Label("Mine more food"+"\n"+ "current source: " + pane.getFoodObtained());
-
-
-                        Button button1= new Button("Close");
-                        button1.setOnAction(e -> popupwindow2.close());
-
-
-                        VBox layout= new VBox(10);
-                        layout.getChildren().addAll(label, button1);
-
-                        layout.setAlignment(Pos.CENTER);
-
-                        Scene scene1= new Scene(layout, 300, 250);
-                        popupwindow2.setScene(scene1);
-                        popupwindow2.showAndWait();
-
-
-                    }
-
+                    else if(pane.getFoodObtained() < 10)
+                        makePopUpMenu();
                 }
             }
 
@@ -272,38 +212,20 @@ public class WorldMenuBar extends MenuBar {
                 int numberOfAnts = pane.getNumberOfAnts();
 
                 Queen ant = (Queen) ants[0];
-                if (ant.getNestCenterX() != -1) {
-                    if(pane.getFoodObtained()>=2) {
+                if (ant.getNestCenterX() != -1)
+                {
+                    if(pane.getFoodObtained()>=2)
+                    {
                         ants[numberOfAnts] = new DiggingAnt(ant.getNestCenterX() - 1, ant.getNestCenterY());
                         pane.setNumberOfAnts(++numberOfAnts);
 
                         pane.setFoodObtained(pane.getFoodObtained() - 2);
                     }
-                    if(pane.getFoodObtained()<1) {
-
-                    Stage popupwindow1=new Stage();
-                    popupwindow1.initModality(Modality.APPLICATION_MODAL);
-                        Label label= new Label("Mine more food"+"\n"+ "current source: " + pane.getFoodObtained());
-
-
-                    Button button1= new Button("Close");
-                    button1.setOnAction(e -> popupwindow1.close());
-
-
-                    VBox layout= new VBox(10);
-                    layout.getChildren().addAll(label, button1);
-
-                    layout.setAlignment(Pos.CENTER);
-
-                    Scene scene1= new Scene(layout, 300, 250);
-                    popupwindow1.setScene(scene1);
-                    popupwindow1.showAndWait();
-
-
+                    else if(pane.getFoodObtained() < 2)
+                        makePopUpMenu();
                 }
-                }
-
             }
+
             if(event.getSource() == foodItem)
             {
                 Label l = new Label("no text input");
@@ -362,17 +284,12 @@ public class WorldMenuBar extends MenuBar {
 
             }
 
-
-
             if(event.getSource() == oneSpeedItem)
             {
                 if (isRunning) {
                     pane.stopSimulation();
-
                     pane.getFarm().setPlayspeed(1000);
-
                     pane.runSimulation();
-
                 }
                 else
                     pane.getFarm().setPlayspeed(1000);
@@ -380,39 +297,29 @@ public class WorldMenuBar extends MenuBar {
 
             if(event.getSource() == twoSpeedItem)
             {
-
                 if (isRunning) {
-
                     pane.stopSimulation();
                     pane.getFarm().setPlayspeed(500);
                     pane.runSimulation();
-
                 }
                 else
                     pane.getFarm().setPlayspeed(500);
-
             }
 
             if(event.getSource() == threeSpeedItem)
             {
-
                 if (isRunning) {
-
                     pane.stopSimulation();
                     pane.getFarm().setPlayspeed(250);
                     pane.runSimulation();
-
                 }
-
                 else
                     pane.getFarm().setPlayspeed(250);
             }
 
             if(event.getSource() == fourSpeedItem)
-
             {
                 if (isRunning) {
-
                     pane.stopSimulation();
                     pane.getFarm().setPlayspeed(100);
                     pane.runSimulation();

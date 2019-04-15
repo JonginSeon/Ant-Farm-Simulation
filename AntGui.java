@@ -10,7 +10,7 @@ public class AntGui extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        primaryStage.setTitle("Site of Terrifying, Rapidly-Growing, Ant-Exploit Development!");
+        primaryStage.setTitle("Land of Growing Ant-Sophistication!");
 
         BorderPane root = new BorderPane();
 
