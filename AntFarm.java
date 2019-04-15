@@ -102,6 +102,19 @@ public class AntFarm {
 
     }
 
+    public int kingCounter(Tile[][] screen){
+        int counter=0;
+        for (int j = 0; j < 100; j++) {
+
+            for (int i= 10; i < 100; i++) {
+                if(screen[i][j] == Tile.K){
+                    counter++;
+                }
+            }
+        }
+        return counter;
+
+    }
 
     public Tile[][] getScreen() {
 

@@ -1,12 +1,12 @@
 package main;
 
-public class WorkingAnt implements Ant{
+public class King implements Ant{
     private Tile antTile;
     private int LocX;
     private int LocY;
 
-    public WorkingAnt (int locX, int locY){
-        antTile = Tile.W;
+    public  King(int locX, int locY){
+        antTile = Tile.K;
         LocX = locX;
         LocY = locY;
     }
@@ -27,9 +27,7 @@ public class WorkingAnt implements Ant{
     }
 
     @Override
-    public int getLocY() {
-        return LocY;
-    }
+    public int getLocY() { return LocY; }
 
     @Override
     public Tile getAntTile() {

@@ -1,3 +1,3 @@
 package main;
 
-enum Tile {S, D, T, G, W, Q, F}
+enum Tile {S, D, T, G, W, K, Q, F}

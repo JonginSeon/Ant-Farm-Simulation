@@ -32,7 +32,6 @@ public class DiggingAnt implements Ant {
 
     @Override
     public Tile getAntTile() {
-        antTile = Tile.G;
         return antTile;
     }
 }

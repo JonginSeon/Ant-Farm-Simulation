@@ -29,6 +29,7 @@ public class WorldMenuBar extends MenuBar {
     private MenuItem quitItem;
     private MenuItem workAntItem;
     private MenuItem digAntItem;
+    private MenuItem kingAntItem;
     private MenuItem infoItem;
     private MenuItem timeItem;
     private MenuItem foodItem;
@@ -76,6 +77,9 @@ public class WorldMenuBar extends MenuBar {
         digAntItem = new MenuItem("Digging Ant");
         digAntItem.setOnAction(handler);
 
+        kingAntItem = new MenuItem("King Ant");
+        kingAntItem.setOnAction(handler);
+
         foodItem = new MenuItem("Food");
         foodItem.setOnAction(handler);
 
@@ -99,7 +103,7 @@ public class WorldMenuBar extends MenuBar {
 
         fileMenu.getItems().addAll(saveItem, loadItem, quitItem);
         runMenu.getItems().addAll(startItem, pauseItem, resetItem);
-        storeMenu.getItems().addAll(workAntItem, digAntItem,foodItem);
+        storeMenu.getItems().addAll(workAntItem, digAntItem, kingAntItem, foodItem);
         speedMenu.getItems().addAll(oneSpeedItem, twoSpeedItem, threeSpeedItem, fourSpeedItem);
         infoMenu.getItems().addAll(infoItem,timeItem);
 
@@ -195,13 +199,13 @@ public class WorldMenuBar extends MenuBar {
                 if (ant.getNestCenterX() != -1)
                 {
 
-                    if(pane.getFoodObtained()>=10)
+                    if(pane.getFoodObtained()>=5)
                     {
                     ants[numberOfAnts] = new WorkingAnt(ant.getNestCenterX() - 1, ant.getNestCenterY());
                     pane.setNumberOfAnts(++numberOfAnts);
-                        pane.setFoodObtained(pane.getFoodObtained() - 10);
+                        pane.setFoodObtained(pane.getFoodObtained() - 5);
                     }
-                    else if(pane.getFoodObtained() < 10)
+                    else if(pane.getFoodObtained() < 5)
                         makePopUpMenu();
                 }
             }
@@ -222,6 +226,26 @@ public class WorldMenuBar extends MenuBar {
                         pane.setFoodObtained(pane.getFoodObtained() - 2);
                     }
                     else if(pane.getFoodObtained() < 2)
+                        makePopUpMenu();
+                }
+            }
+
+            if(event.getSource() == kingAntItem)
+            {   Behavior behavior = new Behavior();
+                Ant[] ants = pane.getAnts();
+                int numberOfAnts = pane.getNumberOfAnts();
+
+                Queen ant = (Queen) ants[0];
+                if (ant.getNestCenterX() != -1)
+                {
+                    if(pane.getFoodObtained()>=10)
+                    {
+                        ants[numberOfAnts] = new King(ant.getNestCenterX() - 1, ant.getNestCenterY());
+                        pane.setNumberOfAnts(++numberOfAnts);
+
+                        pane.setFoodObtained(pane.getFoodObtained() - 10);
+                    }
+                    else if(pane.getFoodObtained() < 10)
                         makePopUpMenu();
                 }
             }
@@ -251,14 +275,16 @@ public class WorldMenuBar extends MenuBar {
                 String numOfWorkingant = Integer.toString(farm.WorkingantCounter(farm.getScreen()));
                 String numOfDiggingant = Integer.toString(farm.DiggingAntCounter(farm.getScreen()));
                 String numOfQueen = Integer.toString(farm.queenCounter(farm.getScreen()));
+                String numOfKing = Integer.toString(farm.kingCounter(farm.getScreen()));
                 String numOfFoodObtained = Integer.toString(pane.getFoodObtained());
 
                // Label label1= new Label("Source: "+numOfFood);
                 Label label1= new Label("Food Obtained: "+numOfFoodObtained);
 
                 Label label2= new Label("Queen: "+numOfQueen);
-                Label label3= new Label("DiggingAnt: "+numOfDiggingant);
-                Label label4= new Label("WorkingAnt: "+numOfWorkingant);
+                Label label3= new Label("King: "+numOfKing);
+                Label label4= new Label("DiggingAnt: "+numOfDiggingant);
+                Label label5= new Label("WorkingAnt: "+numOfWorkingant);
 
 
                 Button button1= new Button("Close");
@@ -266,7 +292,7 @@ public class WorldMenuBar extends MenuBar {
 
 
                 VBox layout= new VBox(10);
-                layout.getChildren().addAll(label1,label2,label3,label4, button1);
+                layout.getChildren().addAll(label1,label2,label3,label4, label5, button1);
 
                 layout.setAlignment(Pos.CENTER);
 

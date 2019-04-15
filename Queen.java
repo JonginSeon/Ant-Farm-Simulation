@@ -54,7 +54,6 @@ public class Queen implements Ant {
 
     @Override
     public Tile getAntTile() {
-        antTile = Tile.Q;
         return antTile;
     }
 

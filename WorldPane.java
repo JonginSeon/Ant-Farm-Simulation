@@ -23,7 +23,7 @@ public class WorldPane extends AnchorPane {
     private AntFarm farm;
     int numberOfAnts = 0;
     private Ant[] ants = new Ant[10];
-    private int foodObtained=0;
+    private int foodObtained=50;
 
     private Ant queen = new Queen();
     private String[] split;
@@ -110,6 +110,8 @@ public class WorldPane extends AnchorPane {
                     this.world[r][c].setStyle("-fx-background-color: SaddleBrown");
                 else if (screen[r][c] == Tile.Q)
                     this.world[r][c].setStyle("-fx-background-color: Pink");
+                else if (screen[r][c] == Tile.K)
+                    this.world[r][c].setStyle("-fx-background-color: Black");
                 else if (screen[r][c] == Tile.G)
                     this.world[r][c].setStyle("-fx-background-color: Yellow");
                 else if (screen[r][c] == Tile.W)
@@ -159,15 +161,18 @@ public class WorldPane extends AnchorPane {
 
                         case Q:
                             antBehavior.digToBottom((Queen) ants[i], farm.getScreen());
-
                             break;
 
-                        case W:
+                        case K:
                             antBehavior.moveRandom(ants[i], farm.getScreen());
                             break;
 
-                        case G:
+                        case W:
                             antBehavior.moveRandomCross(ants[i], farm.getScreen());
+                            break;
+
+                        case G:
+                            antBehavior.moveRandomDiag(ants[i], farm.getScreen());
                             break;
 
                     }
@@ -179,7 +184,7 @@ public class WorldPane extends AnchorPane {
                 }
 
                 count = count+1;
-                if(count%5 ==0) {
+                if(count%10 ==0) {
 
                 antBehavior.foodGenerator(farm.getScreen());
                 }
