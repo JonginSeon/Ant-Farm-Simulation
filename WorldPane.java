@@ -1,13 +1,10 @@
 package main;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,16 +26,9 @@ public class WorldPane extends AnchorPane {
     private int count;
 
     private Ant queen = new Queen();
-    private String[] split;
-    private SimpleStringProperty sspTime;
-    private SimpleDateFormat sdf;
-
-    private long timer;
     private Timer time;
 
     public WorldPane() {
-        sspTime = new SimpleStringProperty("00:00:00");
-        sdf = new SimpleDateFormat("mm:ss:S");
         farm = new AntFarm();
         numberOfAnts = 0;
         count = 0;
@@ -115,9 +105,12 @@ public class WorldPane extends AnchorPane {
                 else if (screen[r][c] == Tile.G)
                     this.world[r][c].setStyle("-fx-background-color: Yellow");
                 else if (screen[r][c] == Tile.W)
-                    this.world[r][c].setStyle("-fx-background-color: Red");
+                    this.world[r][c].setStyle("-fx-background-color: red");
                 else if (screen[r][c] == Tile.F)
                     this.world[r][c].setStyle("-fx-background-color: Green");
+                else if (screen[r][c] == Tile.K)
+                    this.world[r][c].setStyle("-fx-background-color: Black");
+
             }
         }
     }
@@ -168,38 +161,34 @@ public class WorldPane extends AnchorPane {
                             antBehavior.moveRandomCross(ants[i], farm.getScreen());
                             break;
 
+                        case K:
+                            antBehavior.moveRandomCross(ants[i], farm.getScreen());
+                            break;
+
                     }
                 }
-
-                if(antBehavior.getFoodObtained()==1){
+                if(antBehavior.getFoodObtained()==1 ||antBehavior.getFoodObtained()==2 ||antBehavior.getFoodObtained()==3){
                     foodObtained++;
-                    System.out.println(foodObtained);
                 }
 
                 count++;
-                if(count % 5 == 0)
-                    antBehavior.foodGenerator(farm.getScreen());
+                if(foodObtained >30) {
+                    if (count % 10 == 0)
+                        antBehavior.foodGenerator(farm.getScreen());
+                }
+                else if (foodObtained<=30){
+                    if (count % 5 == 0)
+                        antBehavior.foodGenerator(farm.getScreen());
 
-                updateTime();
+                }
+
                 updateWorld(farm.getScreen());
             }
         };
             time.schedule(task, 0, farm.getPlayspeed());
     }
 
-    public synchronized void updateTime() {
-        this.timer = this.timer + 10;
-        split = sdf.format(new Date(this.timer)).split(":");
-        sspTime.set(split[0] + ":" + split[1] + ":" + (split[2].length() == 1 ? "0" + split[2] : split[2].substring(0, 2)));
-    }
 
-    public synchronized long getTime() {
-        return timer;
-    }
-
-    public synchronized SimpleStringProperty getSspTime() {
-        return sspTime;
-    }
 
     public void update(){
         updateWorld(farm.getScreen());

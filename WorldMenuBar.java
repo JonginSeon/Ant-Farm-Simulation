@@ -31,8 +31,6 @@ public class WorldMenuBar extends MenuBar {
     private MenuItem digAntItem;
     private MenuItem kingAntItem;
     private MenuItem infoItem;
-    private MenuItem timeItem;
-    private MenuItem foodItem;
     private MenuItem oneSpeedItem;
     private MenuItem twoSpeedItem;
     private MenuItem threeSpeedItem;
@@ -80,14 +78,8 @@ public class WorldMenuBar extends MenuBar {
         kingAntItem = new MenuItem("King Ant");
         kingAntItem.setOnAction(handler);
 
-        foodItem = new MenuItem("Food");
-        foodItem.setOnAction(handler);
-
         infoItem = new MenuItem("Information");
         infoItem.setOnAction(handler);
-
-        timeItem = new MenuItem("Time");
-        timeItem.setOnAction(handler);
 
         oneSpeedItem = new MenuItem(".5X Speed");
         oneSpeedItem.setOnAction(handler);
@@ -103,9 +95,9 @@ public class WorldMenuBar extends MenuBar {
 
         fileMenu.getItems().addAll(saveItem, loadItem, quitItem);
         runMenu.getItems().addAll(startItem, pauseItem, resetItem);
-        storeMenu.getItems().addAll(workAntItem, digAntItem, kingAntItem, foodItem);
+        storeMenu.getItems().addAll(workAntItem, digAntItem, kingAntItem);
         speedMenu.getItems().addAll(oneSpeedItem, twoSpeedItem, threeSpeedItem, fourSpeedItem);
-        infoMenu.getItems().addAll(infoItem,timeItem);
+        infoMenu.getItems().addAll(infoItem);
 
         getMenus().addAll(fileMenu, runMenu, speedMenu, storeMenu,infoMenu);
 
@@ -250,22 +242,7 @@ public class WorldMenuBar extends MenuBar {
                 }
             }
 
-            if(event.getSource() == foodItem)
-            {
-                Label l = new Label("no text input");
-                TextInputDialog td = new TextInputDialog("Enter here");
-                td.setHeaderText("How many food do you wnat?");
-                td.showAndWait();
 
-                l.setText(td.getEditor().getText());
-               Behavior behavior = new Behavior();
-               String tem =td.getEditor().getText();
-               int numberOfFood = Integer.parseInt(tem);
-               behavior.foodGenerator(farm.getScreen());
-
-
-
-            }
             if(event.getSource() == infoItem)
             {
                 Stage popupwindow=new Stage();
@@ -299,14 +276,6 @@ public class WorldMenuBar extends MenuBar {
                 Scene scene1= new Scene(layout, 300, 250);
                 popupwindow.setScene(scene1);
                 popupwindow.showAndWait();
-
-            }
-
-            if(event.getSource() == timeItem){
-
-
-
-
 
             }
 

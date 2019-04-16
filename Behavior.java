@@ -2,9 +2,9 @@ package main;
 
 import java.util.Random;
 public class Behavior {
-WorldPane   pane = new WorldPane();
     Random rn = new Random();
 int foodObtained;
+
     public void moveRandomCross(Ant ant, Tile[][] screen) {
         int direction = rn.nextInt(4) + 1;
         switch (direction) {
@@ -57,7 +57,59 @@ int foodObtained;
                 break;
         }
     }
+    public void moveRandom(Ant ant, Tile[][] screen) {
 
+        int direction = rn.nextInt(4) + 1;
+
+        switch (direction) {
+            case 1:
+                ant.setLocX(ant.getLocX() - 1);
+                if (antOutOfBounds(ant,screen)) {
+                    ant.setLocX(ant.getLocX() + 1);
+                    moveRandom(ant,screen);
+                    break;
+                }
+                screen[ant.getLocX() + 1][ant.getLocY()] = Tile.T;
+                screen[ant.getLocX()][ant.getLocY()] =ant.getAntTile();
+                break;
+
+            case 2:
+                ant.setLocY(ant.getLocY() + 1);
+                if (antOutOfBounds(ant,screen)) {
+                    ant.setLocY(ant.getLocY() - 1);
+                    moveRandom(ant,screen);
+                    break;
+                }
+                screen[ant.getLocX()][ant.getLocY() - 1] = Tile.T;
+                screen[ant.getLocX()][ant.getLocY()] =ant.getAntTile();
+                break;
+
+            case 3:
+                ant.setLocX(ant.getLocX() + 1);
+                if (antOutOfBounds(ant,screen)) {
+                    ant.setLocX(ant.getLocX() - 1);
+                    moveRandom(ant,screen);
+                    break;
+                }
+                screen[ant.getLocX() - 1][ant.getLocY()] = Tile.T;
+                screen[ant.getLocX()][ant.getLocY()] =ant.getAntTile();
+                break;
+
+            case 4:
+                ant.setLocY(ant.getLocY() - 1);
+                if (antOutOfBounds(ant,screen)) {
+                    ant.setLocY(ant.getLocY() + 1);
+                    moveRandom(ant,screen);
+                    break;
+                }
+                screen[ant.getLocX()][ant.getLocY() + 1] = Tile.T;
+                screen[ant.getLocX()][ant.getLocY()] =ant.getAntTile();
+                break;
+
+            default:
+                break;
+        }
+    }
     public void moveRandomDiag(Ant ant, Tile[][] screen) {
         int direction = rn.nextInt(4) + 1;
         switch (direction) {
@@ -107,19 +159,6 @@ int foodObtained;
                 screen[ant.getLocX() - 1][ant.getLocY() - 1] = Tile.T;
                 isFood(ant,screen);
                 screen[ant.getLocX()][ant.getLocY()] = ant.getAntTile();
-                break;
-        }
-    }
-
-    public void moveRandom(Ant ant, Tile[][] screen) {
-        int direction = rn.nextInt(2) + 1;
-        switch (direction) {
-            case 1:
-                moveRandomCross(ant, screen);
-                break;
-
-            case 2:
-                moveRandomDiag(ant, screen);
                 break;
         }
     }
@@ -260,6 +299,20 @@ int foodObtained;
 
     }
 
+    private boolean antOutOfBoundsForG(Ant ant, Tile[][] screen){
+
+        if (screen[ant.getLocX()][ant.getLocY()] == Tile.S) {
+            return true;
+        }
+
+        if (screen[ant.getLocX()][ant.getLocY()] == Tile.T) {
+            return true;
+        }
+        return screen[ant.getLocX()][ant.getLocY()] == Tile.Q || screen[ant.getLocX()][ant.getLocY()] == Tile.G || screen[ant.getLocX()][ant.getLocY()] == Tile.W;
+
+
+    }
+
     public void foodGenerator( Tile[][] screen){
         Random rn = new Random();
             int x = rn.nextInt(89) + 10;
@@ -270,7 +323,6 @@ int foodObtained;
                 else screen[x][y] = Tile.F;
             }
     }
-
 
     public int isFood(Ant ant, Tile[][] screen){
         if(screen[ant.getLocX()][ant.getLocY()]==Tile.F){
