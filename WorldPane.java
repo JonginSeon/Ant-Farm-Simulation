@@ -21,22 +21,29 @@ public class WorldPane extends AnchorPane {
 
     private Label[][] world;
     private AntFarm farm;
-    int numberOfAnts = 0;
-    private Ant[] ants = new Ant[10];
-    private int foodObtained=50;
+
+    private Ant[] ants;
+
+    private int foodObtained;
+    private int numberOfAnts;
+    private int count;
 
     private Ant queen = new Queen();
     private String[] split;
     private SimpleStringProperty sspTime;
-    private SimpleDateFormat sdf = new SimpleDateFormat("mm:ss:S");
+    private SimpleDateFormat sdf;
 
     private long timer;
-   private int count=0;
     private Timer time;
 
     public WorldPane() {
         sspTime = new SimpleStringProperty("00:00:00");
+        sdf = new SimpleDateFormat("mm:ss:S");
         farm = new AntFarm();
+        numberOfAnts = 0;
+        count = 0;
+        ants = new Ant[10];
+        foodObtained = 50; //TODO Change to better value once testing is done
 
         TilePane tilePane = new TilePane();
 
@@ -57,7 +64,6 @@ public class WorldPane extends AnchorPane {
         setMinSize(900, 945);
 
         getChildren().add(tilePane);
-
     }
 
     public AntFarm getFarm() {
@@ -68,22 +74,21 @@ public class WorldPane extends AnchorPane {
 
         ants[0] = queen;
         numberOfAnts += 1;
-
-        Label label;
         this.world = new Label[100][100];
 
+        Label lbl;
         for (int r = 0; r < 100; r++) {
             for (int c = 0; c < 100; c++) {
-                label= new Label();
-                label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-                if (r <= 10) {
-                    label.setStyle("-fx-background-color: DeepSkyBlue");
+                lbl= new Label();
+                lbl.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+                if (r < 10){
+                    lbl.setStyle("-fx-background-color: DeepSkyBlue");
                 } else {
-                    label.setStyle("-fx-background-color: Peru");
+                    lbl.setStyle("-fx-background-color: Peru");
                 }
 
-                tilePane.getChildren().add(label);
-                this.world[r][c] = label;
+                tilePane.getChildren().add(lbl);
+                this.world[r][c] = lbl;
             }
         }
     }
@@ -94,8 +99,6 @@ public class WorldPane extends AnchorPane {
 
             for (int c = 0; c < 100; c++) {
 
-                //if(screem[r][c] )
-
                 //only sky
                 if (screen[r][c] == Tile.S)
                     this.world[r][c].setStyle("-fx-background-color: DeepSkyBlue");
@@ -104,14 +107,11 @@ public class WorldPane extends AnchorPane {
                 else if (screen[r][c] == Tile.D)
                     this.world[r][c].setStyle("-fx-background-color: Peru");
 
-
                 //only tile
                 else if (screen[r][c] == Tile.T)
                     this.world[r][c].setStyle("-fx-background-color: SaddleBrown");
                 else if (screen[r][c] == Tile.Q)
                     this.world[r][c].setStyle("-fx-background-color: Pink");
-                else if (screen[r][c] == Tile.K)
-                    this.world[r][c].setStyle("-fx-background-color: Black");
                 else if (screen[r][c] == Tile.G)
                     this.world[r][c].setStyle("-fx-background-color: Yellow");
                 else if (screen[r][c] == Tile.W)
@@ -136,18 +136,14 @@ public class WorldPane extends AnchorPane {
     }
 
     public int getFoodObtained(){
-
         return foodObtained;
-
     }
-    public void setFoodObtained(int foodObtained){
 
+    public void setFoodObtained(int foodObtained){
         this.foodObtained = foodObtained;
     }
 
-
-
-       public void runSimulation()
+    public void runSimulation()
     {
         time = new Timer();
         TimerTask task = new TimerTask() {
@@ -155,7 +151,8 @@ public class WorldPane extends AnchorPane {
             public void run() {
                 Behavior antBehavior = new Behavior();
                 Tile currentAnt;
-                for (int i = 0; i < numberOfAnts; i++) {
+                for (int i = 0; i < numberOfAnts; i++)
+                {
                     currentAnt = ants[i].getAntTile();
                     switch(currentAnt) {
 
@@ -163,31 +160,26 @@ public class WorldPane extends AnchorPane {
                             antBehavior.digToBottom((Queen) ants[i], farm.getScreen());
                             break;
 
-                        case K:
+                        case W:
                             antBehavior.moveRandom(ants[i], farm.getScreen());
                             break;
 
-                        case W:
-                            antBehavior.moveRandomCross(ants[i], farm.getScreen());
-                            break;
-
                         case G:
-                            antBehavior.moveRandomDiag(ants[i], farm.getScreen());
+                            antBehavior.moveRandomCross(ants[i], farm.getScreen());
                             break;
 
                     }
                 }
-                if(antBehavior.getFoodObtained()==1){
 
+                if(antBehavior.getFoodObtained()==1){
                     foodObtained++;
                     System.out.println(foodObtained);
                 }
 
-                count = count+1;
-                if(count%10 ==0) {
+                count++;
+                if(count % 5 == 0)
+                    antBehavior.foodGenerator(farm.getScreen());
 
-                antBehavior.foodGenerator(farm.getScreen());
-                }
                 updateTime();
                 updateWorld(farm.getScreen());
             }
