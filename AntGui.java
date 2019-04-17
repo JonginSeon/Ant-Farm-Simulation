@@ -10,7 +10,7 @@ public class AntGui extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        primaryStage.setTitle("Land of Growing Ant-Sophistication!");
+        primaryStage.setTitle("Land of Honest, Hardworking Ant-Folk");
 
         BorderPane root = new BorderPane();
 
@@ -20,7 +20,7 @@ public class AntGui extends Application {
         root.setTop(menuBar);
         root.setCenter(worldTiles);
 
-        Scene worldMap = new Scene(root,905, 945);
+        Scene worldMap = new Scene(root,905, 940);
         primaryStage.setScene(worldMap);
         primaryStage.show();
 

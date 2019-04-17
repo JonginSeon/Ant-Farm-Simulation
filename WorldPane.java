@@ -64,15 +64,17 @@ public class WorldPane extends AnchorPane {
 
         ants[0] = queen;
         numberOfAnts += 1;
-        this.world = new Label[100][100];
+        this.world = new Label[101][100];
 
         Label lbl;
-        for (int r = 0; r < 100; r++) {
+        for (int r = 0; r < 101; r++) {
             for (int c = 0; c < 100; c++) {
                 lbl= new Label();
                 lbl.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                 if (r < 10){
                     lbl.setStyle("-fx-background-color: DeepSkyBlue");
+                } else if (r == 100) {
+                    lbl.setStyle("-fx-background-color: White");
                 } else {
                     lbl.setStyle("-fx-background-color: Peru");
                 }
