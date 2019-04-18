@@ -1,40 +1,39 @@
+
 package main;
 
 /**
  * Establishes the minimum functionality for all Ants, including WorkingAnts,
  * DiggingAnts, Kings, and Queens.
  */
-public interface  Ant
-{
-
+public interface  Ant {
    /**
-    * Sets the X-coordinate for this ant
+    * Sets the X-coordinate for this ant.
     * @param locX The new X-coordinate
     */
-   public void setLocX(int locX);
+   void setLocX(int locX);
 
    /**
-    * Sets the Y-coordinate for this ant
+    * Sets the Y-coordinate for this ant.
     * @param locY The new Y-coordinate
     */
-   public void setLocY(int locY);
+   void setLocY(int locY);
 
    /**
-    * Gets the X-coordinate for this ant
+    * Gets the X-coordinate for this ant.
     * @return The X-coordinate
     */
-   public int getLocX();
+   int getLocX();
 
    /**
-    * Gets the Y-coordinate for this ant
+    * Gets the Y-coordinate for this ant.
     * @return The Y-coordinate
     */
-   public int getLocY();
+   int getLocY();
 
    /**
-    * Gets the Tile type for this ant
+    * Gets the Tile type for this ant.
     * @return This ant's Tile type
     */
-   public Tile getAntTile();
+   Tile getAntTile();
 }
 
