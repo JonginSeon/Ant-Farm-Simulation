@@ -7,15 +7,15 @@ import java.util.Random;
  * It also controls the generation of food and the effects of an Ant touching
  * food tiles.
  */
-public class Behavior { //TODO Javadocs are NOT DONE for moveRandom methods!
+public class Behavior {
 
     Random rn = new Random();
     int foodObtained;
 
     /**
      * Makes an Ant randomly shift position to an adjacent position in the world.
-     * There are
-     *
+     * There are eight possible movements: up, down, left, right, up-left, up-right,
+     * down-left, and down-right.
      * @param ant The ant that will be moved.
      * @param screen The array the ant moves through.
      */
@@ -94,7 +94,7 @@ public class Behavior { //TODO Javadocs are NOT DONE for moveRandom methods!
 
     /**
      * Makes an Ant randomly shift position to an adjacent position in the world.
-     * There are four possible movements: up-left, up-right, down-left, and down-right
+     * There are four possible movements: up-left, up-right, down-left, and down-right.
      * @param ant The ant that will be moved.
      * @param screen The array the ant moves through.
      */
@@ -315,20 +315,6 @@ public class Behavior { //TODO Javadocs are NOT DONE for moveRandom methods!
         return screen[ant.getLocX()][ant.getLocY()] == Tile.Q || screen[ant.getLocX()][ant.getLocY()] == Tile.G || screen[ant.getLocX()][ant.getLocY()] == Tile.W;
 
     }
-
-//    private boolean antOutOfBoundsForG(Ant ant, Tile[][] screen) {
-//
-//        if (screen[ant.getLocX()][ant.getLocY()] == Tile.S) {
-//            return true;
-//        }
-//
-//        if (screen[ant.getLocX()][ant.getLocY()] == Tile.T) {
-//            return true;
-//        }
-//        return screen[ant.getLocX()][ant.getLocY()] == Tile.Q || screen[ant.getLocX()][ant.getLocY()] == Tile.G || screen[ant.getLocX()][ant.getLocY()] == Tile.W;
-//
-//
-//    }
 
     /**
      * Randomly turns one non-Ant, non-Sky Tile into a food Tile
