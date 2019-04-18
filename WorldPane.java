@@ -263,5 +263,4 @@ public class WorldPane extends AnchorPane {
         time.cancel();
     }
 
-
 }

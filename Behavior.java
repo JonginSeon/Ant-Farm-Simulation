@@ -361,9 +361,8 @@ public class Behavior {
      * @return The total amount of food found.
      */
     public int getFoodObtained() {
-
         return foodObtained;
-
     }
+
 }
 

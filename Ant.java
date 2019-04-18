@@ -35,5 +35,5 @@ public interface  Ant {
     * @return This ant's Tile type
     */
    Tile getAntTile();
-}
 
+}

@@ -1,3 +1,4 @@
+
 package main;
 
 import java.io.File;
@@ -13,9 +14,11 @@ import java.util.Scanner;
  * @version 4/17/2019
  */
 public class AntFarm {
-
+    /** An array of tiles representing ants and the world environment. */
     private Tile[][] screen;
-    private int playspeed; /** The time in milliseconds between each WorldPane update. */
+
+    /** The time in milliseconds between each WorldPane update. */
+    private int playspeed;
 
     /**
      * Creates a new AntFarm with a 100 x 100 Tile array. Rows 1-10 of the array
@@ -232,4 +235,5 @@ public class AntFarm {
             e.printStackTrace();
         }
     }
+
 }
