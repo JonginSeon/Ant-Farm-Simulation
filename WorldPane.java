@@ -236,6 +236,10 @@ public class WorldPane extends AnchorPane {
         return ants;
     }
 
+    /**
+     * Sets the value of the property numberOfAnts.
+     * @param noa The new number of ants
+     */
     public void setNumberOfAnts(int noa) {
         this.numberOfAnts = noa;
     }
