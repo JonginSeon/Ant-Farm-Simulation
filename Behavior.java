@@ -19,55 +19,15 @@ public class Behavior { //TODO Javadocs are NOT DONE for moveRandom methods!
      * @param ant The ant that will be moved.
      * @param screen The array the ant moves through.
      */
-    public void moveRandomCross(Ant ant, Tile[][] screen) {
-        int direction = rn.nextInt(4) + 1;
+    public void moveRandom(Ant ant, Tile[][] screen) {
+        int direction = rn.nextInt(2) + 1;
         switch (direction) {
             case 1:
-                ant.setLocX(ant.getLocX() - 1);
-                if (antOutOfBounds(ant, screen)) {
-                    ant.setLocX(ant.getLocX() + 1);
-                    moveRandomCross(ant, screen);
-                    break;
-                }
-                screen[ant.getLocX() + 1][ant.getLocY()] = Tile.T;
-                isFood(ant, screen);
-                screen[ant.getLocX()][ant.getLocY()] = ant.getAntTile();
+                moveRandomCross(ant, screen);
                 break;
 
             case 2:
-                ant.setLocY(ant.getLocY() + 1);
-                if (antOutOfBounds(ant, screen)) {
-                    ant.setLocY(ant.getLocY() - 1);
-                    moveRandomCross(ant, screen);
-                    break;
-                }
-                screen[ant.getLocX()][ant.getLocY() - 1] = Tile.T;
-                isFood(ant, screen);
-                screen[ant.getLocX()][ant.getLocY()] = ant.getAntTile();
-                break;
-
-            case 3:
-                ant.setLocX(ant.getLocX() + 1);
-                if (antOutOfBounds(ant, screen)) {
-                    ant.setLocX(ant.getLocX() - 1);
-                    moveRandomCross(ant, screen);
-                    break;
-                }
-                screen[ant.getLocX() - 1][ant.getLocY()] = Tile.T;
-                isFood(ant, screen);
-                screen[ant.getLocX()][ant.getLocY()] = ant.getAntTile();
-                break;
-
-            case 4:
-                ant.setLocY(ant.getLocY() - 1);
-                if (antOutOfBounds(ant, screen)) {
-                    ant.setLocY(ant.getLocY() + 1);
-                    moveRandomCross(ant, screen);
-                    break;
-                }
-                screen[ant.getLocX()][ant.getLocY() + 1] = Tile.T;
-                isFood(ant, screen);
-                screen[ant.getLocX()][ant.getLocY()] = ant.getAntTile();
+                moveRandomDiag(ant, screen);
                 break;
         }
     }
@@ -78,7 +38,7 @@ public class Behavior { //TODO Javadocs are NOT DONE for moveRandom methods!
      * @param ant The ant that will be moved.
      * @param screen The array the ant moves through.
      */
-    public void moveRandom(Ant ant, Tile[][] screen) {
+    public void moveRandomCross(Ant ant, Tile[][] screen) {
 
         int direction = rn.nextInt(4) + 1;
 
@@ -342,11 +302,11 @@ public class Behavior { //TODO Javadocs are NOT DONE for moveRandom methods!
      * @return True if the Ant was out of bounds, False if not.
      */
     private boolean antOutOfBounds(Ant ant, Tile[][] screen) {
-        if (ant.getLocX() < 0 || ant.getLocX() > 100) //Used to be 100
+        if (ant.getLocX() < 0 || ant.getLocX() > 99) //Used to be 100
         {
             return true;
         }
-        if (ant.getLocY() < 0 || ant.getLocY() > 100) {
+        if (ant.getLocY() < 0 || ant.getLocY() > 99) {
             return true;
         }
         if (screen[ant.getLocX()][ant.getLocY()] == Tile.S) {

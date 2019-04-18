@@ -189,15 +189,15 @@ public class WorldPane extends AnchorPane {
                             break;
 
                         case W:
-                            antBehavior.moveRandom(ants[i], farm.getScreen());
+                            antBehavior.moveRandomCross(ants[i], farm.getScreen());
                             break;
 
                         case G:
-                            antBehavior.moveRandomCross(ants[i], farm.getScreen());
+                            antBehavior.moveRandomDiag(ants[i], farm.getScreen());
                             break;
 
                         case K:
-                            antBehavior.moveRandomCross(ants[i], farm.getScreen());
+                            antBehavior.moveRandom(ants[i], farm.getScreen());
                             break;
 
                     }
@@ -234,6 +234,10 @@ public class WorldPane extends AnchorPane {
      */
     public Ant[] getAnts() {
         return ants;
+    }
+
+    public void setNumberOfAnts(int noa) {
+        this.numberOfAnts = noa;
     }
 
     /**
