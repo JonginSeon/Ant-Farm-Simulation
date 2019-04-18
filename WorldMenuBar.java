@@ -82,13 +82,13 @@ public class WorldMenuBar extends MenuBar {
         quitItem = new MenuItem("Exit");
         quitItem.setOnAction(handler);
 
-        workAntItem = new MenuItem("Working Ant");
+        workAntItem = new MenuItem("Working Ant -> $5");
         workAntItem.setOnAction(handler);
 
-        digAntItem = new MenuItem("Digging Ant");
+        digAntItem = new MenuItem("Digging Ant -> $2");
         digAntItem.setOnAction(handler);
 
-        kingAntItem = new MenuItem("King Ant");
+        kingAntItem = new MenuItem("King Ant -> $10");
         kingAntItem.setOnAction(handler);
 
         infoItem = new MenuItem("Information");
@@ -108,7 +108,7 @@ public class WorldMenuBar extends MenuBar {
 
         fileMenu.getItems().addAll(saveItem, loadItem, quitItem);
         runMenu.getItems().addAll(startItem, pauseItem, resetItem);
-        storeMenu.getItems().addAll(workAntItem, digAntItem, kingAntItem);
+        storeMenu.getItems().addAll(digAntItem, workAntItem, kingAntItem);
         speedMenu.getItems().addAll(oneSpeedItem, twoSpeedItem, threeSpeedItem, fourSpeedItem);
         infoMenu.getItems().addAll(infoItem);
 
