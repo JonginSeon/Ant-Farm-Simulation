@@ -29,6 +29,9 @@ public class Behavior {
             case 2:
                 moveRandomDiag(ant, screen);
                 break;
+
+            default:
+                moveRandomCross(ant, screen);
         }
     }
 
@@ -148,6 +151,9 @@ public class Behavior {
                 isFood(ant, screen);
                 screen[ant.getLocX()][ant.getLocY()] = ant.getAntTile();
                 break;
+
+            default:
+                moveRandomDiag(ant, screen);
         }
     }
 
@@ -195,6 +201,9 @@ public class Behavior {
                     isFood(ant, screen);
                     screen[ant.getLocX()][ant.getLocY()] = ant.getAntTile();
                     break;
+
+                default:
+                    digToBottom(ant, screen);
             }
 
         } else if (ant.getNestCenterX() == -1) {

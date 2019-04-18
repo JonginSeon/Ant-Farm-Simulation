@@ -16,7 +16,6 @@ public class AntFarm {
 
     private Tile[][] screen;
     private int playspeed; /** The time in milliseconds between each WorldPane update. */
-    public static int foodObtained;
 
     /**
      * Creates a new AntFarm with a 100 x 100 Tile array. Rows 1-10 of the array
@@ -77,7 +76,7 @@ public class AntFarm {
      * Counts the amount of WorkingAnt Tiles currently in the Tile Array
      * @return The number of "W" Tiles
      */
-    public int WorkingantCounter(Tile[][] screen) {
+    public int workingAntCounter(Tile[][] screen) {
         int counter = 0;
         for (int j = 0; j < 100; j++) {
 
@@ -94,7 +93,7 @@ public class AntFarm {
      * Counts the amount of DiggingAnt Tiles currently in the Tile Array
      * @return The number of "G" Tiles
      */
-    public int DiggingAntCounter(Tile[][] screen) {
+    public int diggingAntCounter(Tile[][] screen) {
         int counter = 0;
         for (int j = 0; j < 100; j++) {
 

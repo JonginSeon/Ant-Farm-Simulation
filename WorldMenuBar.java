@@ -274,8 +274,8 @@ public class WorldMenuBar extends MenuBar {
                 popupwindow.initModality(Modality.APPLICATION_MODAL);
                 popupwindow.setTitle("Current Ant Farm Info");
                 String numOfFood = Integer.toString(farm.foodCounter());
-                String numOfWorkingant = Integer.toString(farm.WorkingantCounter(farm.getScreen()));
-                String numOfDiggingant = Integer.toString(farm.DiggingAntCounter(farm.getScreen()));
+                String numOfWorkingant = Integer.toString(farm.workingAntCounter(farm.getScreen()));
+                String numOfDiggingant = Integer.toString(farm.diggingAntCounter(farm.getScreen()));
                 String numOfQueen = Integer.toString(farm.queenCounter(farm.getScreen()));
                 String numOfKing = Integer.toString(farm.kingCounter(farm.getScreen()));
                 String numOfFoodObtained = Integer.toString(pane.getFoodObtained());

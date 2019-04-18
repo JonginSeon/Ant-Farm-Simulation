@@ -200,6 +200,9 @@ public class WorldPane extends AnchorPane {
                             antBehavior.moveRandom(ants[i], farm.getScreen());
                             break;
 
+                        default:
+                            break;
+
                     }
                 }
                 if (antBehavior.getFoodObtained() == 1 || antBehavior.getFoodObtained() == 2 || antBehavior.getFoodObtained() == 3) {
