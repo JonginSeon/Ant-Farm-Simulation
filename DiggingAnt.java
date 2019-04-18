@@ -11,7 +11,7 @@ public class DiggingAnt implements Ant {
     private int LocY;
 
     /**
-     * Creates a DiggingAnt with internal X and Y coordinates and the Tile Type "G".
+     * Creates a DiggingAnt with the given X and Y coordinates and the Tile Type "G".
      * @param locX This ant's X coordinate in the 100 x 100 world
      * @param locY This ant's Y coordinate in the 100 x 100 world
      */

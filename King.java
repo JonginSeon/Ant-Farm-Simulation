@@ -11,7 +11,7 @@ public class King implements Ant{
     private int LocY;
 
     /**
-     * Creates a King with internal X and Y coordinates and the Tile Type "K".
+     * Creates a King with the given X and Y coordinates and the Tile Type "K".
      * @param locX This ant's X coordinate in the 100 x 100 world
      * @param locY This ant's Y coordinate in the 100 x 100 world
      */

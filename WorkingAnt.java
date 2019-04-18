@@ -11,7 +11,7 @@ public class WorkingAnt implements Ant{
     private int LocY;
 
     /**
-     * Creates a WorkerAnt with internal X and Y coordinates and the Tile Type "W".
+     * Creates a WorkerAnt with the given X and Y coordinates and the Tile Type "W".
      * @param locX This ant's X coordinate in the 100 x 100 world
      * @param locY This ant's Y coordinate in the 100 x 100 world
      */
