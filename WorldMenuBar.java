@@ -12,6 +12,12 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/**
+ * This class creates a menu bar that contains several buttons that
+ * can influence the antfarm simulation depicted via WorldPane.
+ * @author Elijah, Jongin, Justin, Christian
+ * @version 4/17/2019
+ */
 public class WorldMenuBar extends MenuBar {
 
     private MenuHandler handler;
@@ -39,6 +45,12 @@ public class WorldMenuBar extends MenuBar {
     private AntFarm farm;
     private WorldPane pane;
 
+    /**
+     * Creates a WorldMenubar object with 5 menus and 14 menu items and assigns each
+     * of them to an event listener. This WorldMenuBar will cause changes in the WorldPane
+     * class given as its parameter.
+     * @param worldPane The WorldPane object that this WorldMenuBar will affect.
+     */
     public WorldMenuBar(WorldPane worldPane)
     {
 
@@ -51,6 +63,7 @@ public class WorldMenuBar extends MenuBar {
         runMenu = new Menu("Run");
         speedMenu = new Menu("Speeds");
         infoMenu = new Menu("Info");
+
         resetItem = new MenuItem("Reset");
         resetItem.setOnAction(handler);
 
@@ -103,10 +116,18 @@ public class WorldMenuBar extends MenuBar {
 
     }
 
+    /**
+     * This class registers when any of the menu buttons have been clicked and
+     * does the appropriate action depending on which one was selected.
+     */
     private class MenuHandler implements EventHandler<ActionEvent>
     {
         private boolean isRunning = false;
 
+        /**
+         * Creates a small popup window to notify the user that they have
+         * selected an ant that they do not have enough food to build.
+         */
         private void makePopUpMenu()
         {
             Stage popupwindow2=new Stage();
@@ -126,6 +147,10 @@ public class WorldMenuBar extends MenuBar {
             popupwindow2.showAndWait();
         }
 
+        /**
+         * Determines which button has been clicked and executes the appropriate commands.
+         * @param event A mouse-click on any of the menu buttons
+         */
         public void handle(ActionEvent event) {
             if(event.getSource() == quitItem)
             {
