@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 public class AntGui extends Application {
 
     /**
-     * Creates the Antfarm map using a WorldPane and a WorldMenuBar class
+     * Creates the Antfarm map using a WorldPane and a WorldMenuBar class.
      * @param primaryStage The screen on which all content will display
      */
     @Override
@@ -32,7 +32,7 @@ public class AntGui extends Application {
         root.setTop(menuBar);
         root.setCenter(worldTiles);
 
-        Scene worldMap = new Scene(root,905, 940);
+        Scene worldMap = new Scene(root, 905, 940);
         primaryStage.setScene(worldMap);
         primaryStage.show();
 
@@ -40,10 +40,10 @@ public class AntGui extends Application {
     }
 
     /**
-     * Begins the simulation
+     * Begins the simulation.
+     * @param args This should always be empty
      */
     public static void main(String[] args) {
         launch(args);
     }
-
 }

@@ -1,4 +1,3 @@
-
 package main;
 
 import java.io.File;
@@ -20,6 +19,9 @@ public class AntFarm {
     /** The time in milliseconds between each WorldPane update. */
     private int playspeed;
 
+    /** The size of the length and width of the tile array. */
+    private static int size = 100;
+
     /**
      * Creates a new AntFarm with a 100 x 100 Tile array. Rows 1-10 of the array
      * are set to Tile "S" (Soil), the remainder are set to Tile "D" (Dirt).
@@ -27,20 +29,20 @@ public class AntFarm {
      */
     public AntFarm() {
 
-        screen = new Tile[100][100];
+        screen = new Tile[size][size];
         Random rn = new Random();
 
         int i;
         int ranK = 0;
         int ranJ = 0;
 
-        for (int j = 0; j < 100; j++) {
+        for (int j = 0; j < size; j++) {
 
             for (i = 0; i < 10; i++) {
                 screen[i][j] = Tile.S;
 
             }
-            for (int k = i; k < 100; k++) {
+            for (int k = i; k < size; k++) {
                 screen[k][j] = Tile.D;
 
             }
@@ -48,23 +50,24 @@ public class AntFarm {
         playspeed = 500;
 
         for (int n = 0; n < 120; n++) {
-            ranK = rn.nextInt(100) + 10;
-            ranJ = rn.nextInt(100) + 1;
-            if (ranK < 100 && ranJ < 100)
+            ranK = rn.nextInt(size) + 10;
+            ranJ = rn.nextInt(size) + 1;
+            if (ranK < size && ranJ < size) {
                 screen[ranK][ranJ] = Tile.F;
+            }
         }
 
     }
 
     /**
-     * Counts the amount of Food Tiles currently in the Tile Array
+     * Counts the amount of Food Tiles currently in the Tile Array.
      * @return The number of "F" Tiles
      */
     public int foodCounter() {
         int counter = 0;
-        for (int j = 0; j < 100; j++) {
+        for (int j = 0; j < size; j++) {
 
-            for (int i = 10; i < 100; i++) {
+            for (int i = 10; i < size; i++) {
                 if (screen[i][j] == Tile.F) {
                     counter++;
                 }
@@ -76,14 +79,15 @@ public class AntFarm {
 
 
     /**
-     * Counts the amount of WorkingAnt Tiles currently in the Tile Array
+     * Counts the amount of WorkingAnt Tiles currently in the Tile Array.
+     * @param screen The array to be counted
      * @return The number of "W" Tiles
      */
     public int workingAntCounter(Tile[][] screen) {
         int counter = 0;
-        for (int j = 0; j < 100; j++) {
+        for (int j = 0; j < size; j++) {
 
-            for (int i = 10; i < 100; i++) {
+            for (int i = 10; i < size; i++) {
                 if (screen[i][j] == Tile.W) {
                     counter++;
                 }
@@ -93,14 +97,15 @@ public class AntFarm {
     }
 
     /**
-     * Counts the amount of DiggingAnt Tiles currently in the Tile Array
+     * Counts the amount of DiggingAnt Tiles currently in the Tile Array.
+     * @param screen The array to be counted
      * @return The number of "G" Tiles
      */
     public int diggingAntCounter(Tile[][] screen) {
         int counter = 0;
-        for (int j = 0; j < 100; j++) {
+        for (int j = 0; j < size; j++) {
 
-            for (int i = 10; i < 100; i++) {
+            for (int i = 10; i < size; i++) {
                 if (screen[i][j] == Tile.G) {
                     counter++;
                 }
@@ -111,14 +116,15 @@ public class AntFarm {
     }
 
     /**
-     * Counts the amount of Queen Tiles currently in the Tile Array
+     * Counts the amount of Queen Tiles currently in the Tile Array.
+     * @param screen The array to be counted
      * @return The number of "Q" Tiles
      */
     public int queenCounter(Tile[][] screen) {
         int counter = 0;
-        for (int j = 0; j < 100; j++) {
+        for (int j = 0; j < size; j++) {
 
-            for (int i = 10; i < 100; i++) {
+            for (int i = 10; i < size; i++) {
                 if (screen[i][j] == Tile.Q) {
                     counter++;
                 }
@@ -129,14 +135,15 @@ public class AntFarm {
     }
 
     /**
-     * Counts the amount of King Tiles currently in the Tile Array
+     * Counts the amount of King Tiles currently in the Tile Array.
+     * @param screen The array to be counted
      * @return The number of "K" Tiles
      */
     public int kingCounter(Tile[][] screen) {
         int counter = 0;
-        for (int j = 0; j < 100; j++) {
+        for (int j = 0; j < size; j++) {
 
-            for (int i = 10; i < 100; i++) {
+            for (int i = 10; i < size; i++) {
                 if (screen[i][j] == Tile.K) {
                     counter++;
                 }
@@ -150,26 +157,23 @@ public class AntFarm {
      * Gets the current Tile Array.
      * @return A 100 x 100 Tile Array
      */
-    public Tile[][] getScreen()
-    {
+    public Tile[][] getScreen() {
         return screen;
     }
 
     /**
-     * Gets the time current play speed
+     * Gets the time current play speed.
      * @return The play speed
      */
-    public int getPlayspeed()
-    {
+    public int getPlayspeed() {
         return playspeed;
     }
 
     /**
-     * Sets the play speed
+     * Sets the value property play speed.
      * @param playspeed The new play speed
      */
-    public void setPlayspeed(int playspeed)
-    {
+    public void setPlayspeed(int playspeed) {
         this.playspeed = playspeed;
     }
 
@@ -202,7 +206,7 @@ public class AntFarm {
     }
 
     /**
-     * This method creates updates the current Tile array by
+     * This method updates the current Tile array by
      * interpreting a series of letters from a text document. Once
      * done, it uses the a specified ants location-coordinates to
      * place it in the right position in the Tile array.
@@ -248,7 +252,6 @@ public class AntFarm {
                 }
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

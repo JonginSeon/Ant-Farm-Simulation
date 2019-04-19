@@ -9,4 +9,4 @@ package main;
  * @author Justin
  * @version 4/17/2019
  */
-enum Tile {S, D, T, G, W, K, Q, F}
+enum Tile { S, D, T, G, W, K, Q, F }
