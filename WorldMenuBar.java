@@ -159,14 +159,18 @@ public class WorldMenuBar extends MenuBar {
 
             if(event.getSource() == saveItem)
             {
-                if (isRunning) {
-                    pane.stopSimulation();
-                    isRunning = false;
-                }
-                FileChooser chooser = new FileChooser();
-                File status = chooser.showSaveDialog(null);
-                if(status != null) {
-                    pane.getFarm().save(pane.getFarm().getScreen(), status);
+                Ant[] theseAnts = pane.getAnts();
+                Queen queen = (Queen) theseAnts[0];
+                if (queen.getNestCenterX() >= 0) {
+                    if (isRunning) {
+                        pane.stopSimulation();
+                        isRunning = false;
+                    }
+                    FileChooser chooser = new FileChooser();
+                    File status = chooser.showSaveDialog(null);
+                    if (status != null) {
+                        pane.getFarm().save(pane.getFarm().getScreen(), status);
+                    }
                 }
             }
 
@@ -183,6 +187,7 @@ public class WorldMenuBar extends MenuBar {
                 if (isRunning)
                     pane.stopSimulation();
                 pane.resetWorld();
+                farm = pane.getFarm();
                 isRunning = false;
             }
 
@@ -205,6 +210,12 @@ public class WorldMenuBar extends MenuBar {
                 {
                     farm.load(status, farm.getScreen(), pane.getAnts());
                     pane.update();
+                    int count = 0;
+                    Ant[] theseAnts = pane.getAnts();
+                    for (Ant theseAnt : theseAnts) {
+                        if (theseAnt != null) count++;
+                    }
+                    pane.setNumberOfAnts(count);
                 }
             }
             if(event.getSource() == workAntItem)

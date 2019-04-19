@@ -211,20 +211,37 @@ public class AntFarm {
     public void load(File file, Tile[][] screen, Ant[] ants) {
         try {
             Scanner fileReader = new Scanner(file);
-            int i = 0;
+            int i = 1;
             for (int r = 0; r < screen.length; r++) {
 
                 for (int c = 0; c < screen.length; c++) {
 
                     String t = fileReader.nextLine();
 
-                    if (t.equalsIgnoreCase("A")) {
-                        System.out.println("row " + r);
-                        System.out.println("col " + c);
-                        ants[i].setLocX(r);
-                        ants[i].setLocY(c);
+                    if (t.equalsIgnoreCase("Q")) {
+                        Queen queen = new Queen();
+                        ants[0] = queen;
+                        ants[0].setLocX(r);
+                        queen.setNestCenterX();
+                        ants[0].setLocY(c);
+                        queen.setNestCenterY();
+                    }
+
+                    if (t.equalsIgnoreCase("K")) {
+                        ants[i] = new King(r, c);
                         i++;
                     }
+
+                    if (t.equalsIgnoreCase("W")) {
+                        ants[i] = new WorkingAnt(r, c);
+                        i++;
+                    }
+
+                    if (t.equalsIgnoreCase("G")) {
+                        ants[i] = new DiggingAnt(r, c);
+                        i++;
+                    }
+
                     screen[r][c] = Tile.valueOf(t);
                 }
             }

@@ -37,8 +37,8 @@ public class WorldPane extends AnchorPane {
         farm = new AntFarm();
         numberOfAnts = 0;
         count = 0;
-        ants = new Ant[10];
-        foodObtained = 50; //TODO Change to better value once testing is done
+        ants = new Ant[50];
+        foodObtained = 10; //TODO Change to better value once testing is done
 
         TilePane tilePane = new TilePane();
 
@@ -145,7 +145,7 @@ public class WorldPane extends AnchorPane {
         this.farm = new AntFarm();
         updateWorld(farm.getScreen());
 
-        this.ants = new Ant[10];
+        this.ants = new Ant[50];
         this.numberOfAnts = 0;
         this.queen = new Queen();
         ants[0] = queen;
