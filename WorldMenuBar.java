@@ -155,8 +155,7 @@ public class WorldMenuBar extends MenuBar {
                 System.exit(0);
             }
 
-            if(event.getSource() == saveItem)
-            {
+            if(event.getSource() == saveItem) {
                 Ant[] theseAnts = pane.getAnts();
                 Queen queen = (Queen) theseAnts[0];
                 if (queen.getNestCenterX() >= 0) {
@@ -169,18 +168,9 @@ public class WorldMenuBar extends MenuBar {
                     if (status != null) {
                         pane.getFarm().save(pane.getFarm().getScreen(), status);
                     }
-
-            if (event.getSource() == saveItem) {
-                if (isRunning) {
-                    pane.stopSimulation();
-                    isRunning = false;
-                }
-                FileChooser chooser = new FileChooser();
-                File status = chooser.showSaveDialog(null);
-                if (status != null) {
-                    pane.getFarm().save(pane.getFarm().getScreen(), status);
                 }
             }
+
 
             if (event.getSource() == startItem) {
                 if (!isRunning) {
