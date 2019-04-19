@@ -49,10 +49,10 @@ public class WorldMenuBar extends MenuBar {
      * Creates a WorldMenubar object with 5 menus and 14 menu items and assigns each
      * of them to an event listener. This WorldMenuBar will cause changes in the WorldPane
      * class given as its parameter.
+     *
      * @param worldPane The WorldPane object that this WorldMenuBar will affect.
      */
-    public WorldMenuBar(WorldPane worldPane)
-    {
+    public WorldMenuBar(WorldPane worldPane) {
 
         handler = new MenuHandler();
         pane = worldPane;
@@ -112,7 +112,7 @@ public class WorldMenuBar extends MenuBar {
         speedMenu.getItems().addAll(oneSpeedItem, twoSpeedItem, threeSpeedItem, fourSpeedItem);
         infoMenu.getItems().addAll(infoItem);
 
-        getMenus().addAll(fileMenu, runMenu, speedMenu, storeMenu,infoMenu);
+        getMenus().addAll(fileMenu, runMenu, speedMenu, storeMenu, infoMenu);
 
     }
 
@@ -120,40 +120,38 @@ public class WorldMenuBar extends MenuBar {
      * This class registers when any of the menu buttons have been clicked and
      * does the appropriate action depending on which one was selected.
      */
-    private class MenuHandler implements EventHandler<ActionEvent>
-    {
+    private class MenuHandler implements EventHandler<ActionEvent> {
         private boolean isRunning = false;
 
         /**
          * Creates a small popup window to notify the user that they have
          * selected an ant that they do not have enough food to build.
          */
-        private void makePopUpMenu()
-        {
-            Stage popupwindow2=new Stage();
+        private void makePopUpMenu() {
+            Stage popupwindow2 = new Stage();
             popupwindow2.initModality(Modality.APPLICATION_MODAL);
-            Label label= new Label("Mine more food!"+"\n"+ "Current Food: " + pane.getFoodObtained());
+            Label label = new Label("Mine more food!" + "\n" + "Current Food: " + pane.getFoodObtained());
 
-            Button button1= new Button("Close");
+            Button button1 = new Button("Close");
             button1.setOnAction(e -> popupwindow2.close());
 
-            VBox layout= new VBox(10);
+            VBox layout = new VBox(10);
             layout.getChildren().addAll(label, button1);
 
             layout.setAlignment(Pos.CENTER);
 
-            Scene scene1= new Scene(layout, 100, 150);
+            Scene scene1 = new Scene(layout, 100, 150);
             popupwindow2.setScene(scene1);
             popupwindow2.showAndWait();
         }
 
         /**
          * Determines which button has been clicked and executes the appropriate commands.
+         *
          * @param event A mouse-click on any of the menu buttons
          */
         public void handle(ActionEvent event) {
-            if(event.getSource() == quitItem)
-            {
+            if (event.getSource() == quitItem) {
                 System.exit(0);
             }
 
@@ -171,19 +169,27 @@ public class WorldMenuBar extends MenuBar {
                     if (status != null) {
                         pane.getFarm().save(pane.getFarm().getScreen(), status);
                     }
+
+            if (event.getSource() == saveItem) {
+                if (isRunning) {
+                    pane.stopSimulation();
+                    isRunning = false;
+                }
+                FileChooser chooser = new FileChooser();
+                File status = chooser.showSaveDialog(null);
+                if (status != null) {
+                    pane.getFarm().save(pane.getFarm().getScreen(), status);
                 }
             }
 
-            if(event.getSource() == startItem)
-            {
+            if (event.getSource() == startItem) {
                 if (!isRunning) {
                     pane.runSimulation();
                     isRunning = true;
                 }
             }
 
-            if(event.getSource() == resetItem )
-            {
+            if (event.getSource() == resetItem) {
                 if (isRunning)
                     pane.stopSimulation();
                 pane.resetWorld();
@@ -191,23 +197,20 @@ public class WorldMenuBar extends MenuBar {
                 isRunning = false;
             }
 
-            if(event.getSource() == pauseItem)
-            {
+            if (event.getSource() == pauseItem) {
                 if (isRunning)
                     pane.stopSimulation();
                 isRunning = false;
             }
 
-            if(event.getSource() == loadItem)
-            {
+            if (event.getSource() == loadItem) {
                 if (isRunning) {
                     pane.stopSimulation();
                 }
                 isRunning = false;
                 FileChooser chooser = new FileChooser();
                 File status = chooser.showOpenDialog(null);
-                if(status != null)
-                {
+                if (status != null) {
                     farm.load(status, farm.getScreen(), pane.getAnts());
                     pane.update();
                     int count = 0;
@@ -218,145 +221,125 @@ public class WorldMenuBar extends MenuBar {
                     pane.setNumberOfAnts(count);
                 }
             }
-            if(event.getSource() == workAntItem)
-            {
+            if (event.getSource() == workAntItem) {
                 Ant[] ants = pane.getAnts();
                 int numberOfAnts = pane.getNumberOfAnts();
 
                 Queen ant = (Queen) ants[0];
-                if (ant.getNestCenterX() != -1)
-                {
+                if (ant.getNestCenterX() != -1) {
 
-                    if(pane.getFoodObtained()>=5)
-                    {
-                    ants[numberOfAnts] = new WorkingAnt(ant.getNestCenterX() - 1, ant.getNestCenterY());
-                    pane.setNumberOfAnts(++numberOfAnts);
+                    if (pane.getFoodObtained() >= 5) {
+                        ants[numberOfAnts] = new WorkingAnt(ant.getNestCenterX() - 1, ant.getNestCenterY());
+                        pane.setNumberOfAnts(++numberOfAnts);
                         pane.setFoodObtained(pane.getFoodObtained() - 5);
-                    }
-                    else if(pane.getFoodObtained() < 5)
+                    } else if (pane.getFoodObtained() < 5)
                         makePopUpMenu();
                 }
             }
 
-            if(event.getSource() == digAntItem)
-            {   Behavior behavior = new Behavior();
+            if (event.getSource() == digAntItem) {
+                Behavior behavior = new Behavior();
                 Ant[] ants = pane.getAnts();
                 int numberOfAnts = pane.getNumberOfAnts();
 
                 Queen ant = (Queen) ants[0];
-                if (ant.getNestCenterX() != -1)
-                {
-                    if(pane.getFoodObtained()>=2)
-                    {
+                if (ant.getNestCenterX() != -1) {
+                    if (pane.getFoodObtained() >= 2) {
                         ants[numberOfAnts] = new DiggingAnt(ant.getNestCenterX() - 1, ant.getNestCenterY());
                         pane.setNumberOfAnts(++numberOfAnts);
 
                         pane.setFoodObtained(pane.getFoodObtained() - 2);
-                    }
-                    else if(pane.getFoodObtained() < 2)
+                    } else if (pane.getFoodObtained() < 2)
                         makePopUpMenu();
                 }
             }
 
-            if(event.getSource() == kingAntItem)
-            {   Behavior behavior = new Behavior();
+            if (event.getSource() == kingAntItem) {
+                Behavior behavior = new Behavior();
                 Ant[] ants = pane.getAnts();
                 int numberOfAnts = pane.getNumberOfAnts();
 
                 Queen ant = (Queen) ants[0];
-                if (ant.getNestCenterX() != -1)
-                {
-                    if(pane.getFoodObtained()>=10)
-                    {
+                if (ant.getNestCenterX() != -1) {
+                    if (pane.getFoodObtained() >= 10) {
                         ants[numberOfAnts] = new King(ant.getNestCenterX() - 1, ant.getNestCenterY());
                         pane.setNumberOfAnts(++numberOfAnts);
 
                         pane.setFoodObtained(pane.getFoodObtained() - 10);
-                    }
-                    else if(pane.getFoodObtained() < 10)
+                    } else if (pane.getFoodObtained() < 10)
                         makePopUpMenu();
                 }
             }
 
 
-            if(event.getSource() == infoItem)
-            {
-                Stage popupwindow=new Stage();
+            if (event.getSource() == infoItem) {
+                Stage popupwindow = new Stage();
                 popupwindow.initModality(Modality.APPLICATION_MODAL);
                 popupwindow.setTitle("Current Ant Farm Info");
                 String numOfFood = Integer.toString(farm.foodCounter());
-                String numOfWorkingant = Integer.toString(farm.WorkingantCounter(farm.getScreen()));
-                String numOfDiggingant = Integer.toString(farm.DiggingAntCounter(farm.getScreen()));
+                String numOfWorkingant = Integer.toString(farm.workingAntCounter(farm.getScreen()));
+                String numOfDiggingant = Integer.toString(farm.diggingAntCounter(farm.getScreen()));
                 String numOfQueen = Integer.toString(farm.queenCounter(farm.getScreen()));
                 String numOfKing = Integer.toString(farm.kingCounter(farm.getScreen()));
                 String numOfFoodObtained = Integer.toString(pane.getFoodObtained());
 
-               // Label label1= new Label("Source: "+numOfFood);
-                Label label1= new Label("Food Obtained: "+numOfFoodObtained);
+                // Label label1= new Label("Source: "+numOfFood);
+                Label label1 = new Label("Food Obtained: " + numOfFoodObtained);
 
-                Label label2= new Label("Queen: "+numOfQueen);
-                Label label3= new Label("King: "+numOfKing);
-                Label label4= new Label("DiggingAnt: "+numOfDiggingant);
-                Label label5= new Label("WorkingAnt: "+numOfWorkingant);
+                Label label2 = new Label("Queen: " + numOfQueen);
+                Label label3 = new Label("King: " + numOfKing);
+                Label label4 = new Label("DiggingAnt: " + numOfDiggingant);
+                Label label5 = new Label("WorkingAnt: " + numOfWorkingant);
 
 
-                Button button1= new Button("Close");
+                Button button1 = new Button("Close");
                 button1.setOnAction(e -> popupwindow.close());
 
 
-                VBox layout= new VBox(10);
-                layout.getChildren().addAll(label1,label2,label3,label4, label5, button1);
+                VBox layout = new VBox(10);
+                layout.getChildren().addAll(label1, label2, label3, label4, label5, button1);
 
                 layout.setAlignment(Pos.CENTER);
 
-                Scene scene1= new Scene(layout, 300, 250);
+                Scene scene1 = new Scene(layout, 300, 250);
                 popupwindow.setScene(scene1);
                 popupwindow.showAndWait();
 
             }
 
-            if(event.getSource() == oneSpeedItem)
-            {
+            if (event.getSource() == oneSpeedItem) {
                 if (isRunning) {
                     pane.stopSimulation();
                     pane.getFarm().setPlayspeed(1000);
                     pane.runSimulation();
-                }
-                else
+                } else
                     pane.getFarm().setPlayspeed(1000);
             }
 
-            if(event.getSource() == twoSpeedItem)
-            {
+            if (event.getSource() == twoSpeedItem) {
                 if (isRunning) {
                     pane.stopSimulation();
                     pane.getFarm().setPlayspeed(500);
                     pane.runSimulation();
-                }
-                else
+                } else
                     pane.getFarm().setPlayspeed(500);
             }
 
-            if(event.getSource() == threeSpeedItem)
-            {
+            if (event.getSource() == threeSpeedItem) {
                 if (isRunning) {
                     pane.stopSimulation();
                     pane.getFarm().setPlayspeed(250);
                     pane.runSimulation();
-                }
-                else
+                } else
                     pane.getFarm().setPlayspeed(250);
             }
 
-            if(event.getSource() == fourSpeedItem)
-            {
+            if (event.getSource() == fourSpeedItem) {
                 if (isRunning) {
                     pane.stopSimulation();
                     pane.getFarm().setPlayspeed(100);
                     pane.runSimulation();
-                }
-
-                else
+                } else
                     pane.getFarm().setPlayspeed(100);
             }
         }

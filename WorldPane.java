@@ -200,6 +200,9 @@ public class WorldPane extends AnchorPane {
                             antBehavior.moveRandom(ants[i], farm.getScreen());
                             break;
 
+                        default:
+                            break;
+
                     }
                 }
                 if (antBehavior.getFoodObtained() == 1 || antBehavior.getFoodObtained() == 2 || antBehavior.getFoodObtained() == 3) {
@@ -236,6 +239,10 @@ public class WorldPane extends AnchorPane {
         return ants;
     }
 
+    /**
+     * Sets the value of the property numberOfAnts.
+     * @param noa The new number of ants
+     */
     public void setNumberOfAnts(int noa) {
         this.numberOfAnts = noa;
     }
@@ -255,6 +262,5 @@ public class WorldPane extends AnchorPane {
     public void stopSimulation() {
         time.cancel();
     }
-
 
 }
