@@ -129,5 +129,4 @@ public class Queen implements Ant {
     public Tile getAntTile() {
         return antTile;
     }
-
 }

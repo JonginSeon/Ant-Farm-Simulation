@@ -22,7 +22,7 @@ public class AntGui extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        primaryStage.setTitle("Land of Honest, Hardworking Ant-Folk");
+        primaryStage.setTitle("Land of Truly Glorious Ants!");
 
         BorderPane root = new BorderPane();
 

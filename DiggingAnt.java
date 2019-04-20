@@ -83,5 +83,4 @@ public class DiggingAnt implements Ant {
     public Tile getAntTile() {
         return antTile;
     }
-
 }

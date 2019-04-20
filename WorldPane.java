@@ -60,7 +60,7 @@ public class WorldPane extends AnchorPane {
         numberOfAnts = 0;
         count = 0;
         ants = new Ant[50];
-        foodObtained = 10; //TODO Change to better value once testing is done
+        foodObtained = 30; //TODO Change to better value once testing is done
 
         TilePane tilePane = new TilePane();
 
@@ -307,5 +307,4 @@ public class WorldPane extends AnchorPane {
     public void stopSimulation() {
         time.cancel();
     }
-
 }

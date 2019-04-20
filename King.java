@@ -82,5 +82,4 @@ public class King implements Ant {
     public Tile getAntTile() {
         return antTile;
     }
-
 }
