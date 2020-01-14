@@ -26,7 +26,7 @@ public class WorldPane extends AnchorPane {
      */
     private AntFarm farm;
     /**
-     * The different ants the inhabit the simulation.
+     * The different ants that inhabit the simulation.
      */
     private Ant[] ants;
     /**
