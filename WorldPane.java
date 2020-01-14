@@ -60,7 +60,7 @@ public class WorldPane extends AnchorPane {
         numberOfAnts = 0;
         count = 0;
         ants = new Ant[50];
-        foodObtained = 30; //TODO Change to better value once testing is done
+        foodObtained = 20; // Set high so several ants can be bought immediately
 
         TilePane tilePane = new TilePane();
 
